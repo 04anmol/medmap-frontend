@@ -22,7 +22,7 @@ const HomeScreen = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-surface pb-24">
+    <div className="min-h-screen bg-background pb-24">
       {/* Header */}
       <div className="flex items-center justify-between p-6">
         {/* Logo and User Initial */}
@@ -35,7 +35,7 @@ const HomeScreen = () => {
           <Button
             variant="ghost"
             onClick={handleProfile}
-            className="w-12 h-12 rounded-full bg-gradient-medmap text-primary-foreground font-bold text-lg p-0 shadow-lg"
+            className="w-12 h-12 rounded-full bg-primary text-primary-foreground font-bold text-lg p-0 shadow-lg"
           >
             {user?.firstName?.charAt(0)}{user?.lastName?.charAt(0)}
           </Button>
@@ -46,7 +46,7 @@ const HomeScreen = () => {
           variant="ghost"
           size="sm"
           onClick={handleLogout}
-          className="text-medmap-gray hover:text-destructive transition-colors"
+          className="text-muted-foreground hover:text-destructive transition-colors"
         >
           <LogOut className="w-5 h-5 mr-2" />
           Sign Out
@@ -60,13 +60,13 @@ const HomeScreen = () => {
           <h1 className="text-2xl font-bold text-foreground mb-2">
             Welcome back, {user?.firstName}!
           </h1>
-          <p className="text-medmap-gray">
+          <p className="text-muted-foreground">
             Stay safe and connected
           </p>
         </div>
 
         {/* Current Location */}
-        <Card className="card-medmap bg-gradient-medmap text-white mb-8 animate-fade-in-delayed">
+        <Card className="card-medmap bg-primary text-primary-foreground mb-8 animate-fade-in-delayed">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <MapPin className="w-6 h-6 mr-3" />

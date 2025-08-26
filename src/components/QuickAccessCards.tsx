@@ -32,7 +32,7 @@ const QuickAccessCards = () => {
       icon: Wind, 
       label: 'Oxygen', 
       description: 'Oxygen suppliers',
-      color: 'bg-medmap-teal/10 border-medmap-teal/20 hover:bg-medmap-teal/15',
+      color: 'bg-secondary/10 border-secondary/20 hover:bg-secondary/15',
       path: '/buildings'
     },
   ];
@@ -62,7 +62,7 @@ const QuickAccessCards = () => {
               <div className="flex flex-col items-center text-center">
                 <card.icon className="w-8 h-8 mb-2 text-primary" />
                 <span className="text-sm font-medium text-foreground mb-1">{card.label}</span>
-                <span className="text-xs text-medmap-gray">{card.description}</span>
+                <span className="text-xs text-muted-foreground">{card.description}</span>
               </div>
             </Card>
           ))}

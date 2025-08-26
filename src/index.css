@@ -2,72 +2,66 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+/* Definition of the design system. All colors, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */
 
 @layer base {
   :root {
-    /* MedMap Color Palette */
-    --background: 0 0% 100%;
-    --foreground: 210 29% 24%;
+    /* MedMap Color Palette - Updated to solid colors */
+    --background: 0 0% 100%; /* White: #FFFFFF */
+    --foreground: 210 29% 24%; /* Dark Gray: #2C3E50 */
 
-    --card: 0 0% 100%;
-    --card-foreground: 210 29% 24%;
+    --card: 270 50% 95%; /* Light Lavender: #F4EEFB */
+    --card-foreground: 210 29% 24%; /* Dark Gray: #2C3E50 */
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 210 29% 24%;
+    --popover: 0 0% 100%; /* White: #FFFFFF */
+    --popover-foreground: 210 29% 24%; /* Dark Gray: #2C3E50 */
 
-    /* Primary - Purple Gradient Base */
-    --primary: 261 60% 55%;
-    --primary-foreground: 0 0% 100%;
+    /* Primary - Deep Purple */
+    --primary: 261 50% 40%; /* Deep Purple: #5A339F */
+    --primary-foreground: 0 0% 100%; /* White: #FFFFFF */
 
-    /* Secondary - Vibrant Purple */
-    --secondary: 280 70% 60%;
-    --secondary-foreground: 0 0% 100%;
+    /* Secondary - Teal */
+    --secondary: 168 76% 42%; /* Teal: #1ABC9C */
+    --secondary-foreground: 0 0% 100%; /* White: #FFFFFF */
 
-    /* Light Purple Background */
-    --muted: 270 50% 95%;
-    --muted-foreground: 240 15% 60%;
+    /* Light Lavender Background */
+    --muted: 270 50% 95%; /* Light Lavender: #F4EEFB */
+    --muted-foreground: 240 15% 60%; /* Medium Gray: #7F8C8D */
 
     /* Accent - Bright Green for highlights */
-    --accent: 120 100% 70%;
-    --accent-foreground: 220 25% 15%;
+    --accent: 120 100% 70%; /* Bright Green for active states */
+    --accent-foreground: 220 25% 15%; /* Dark Gray: #2C3E50 */
 
     /* Emergency Red */
-    --destructive: 6 78% 57%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 6 78% 57%; /* Emergency Red: #E74C3C */
+    --destructive-foreground: 0 0% 100%; /* White: #FFFFFF */
 
     --border: 270 60% 90%;
     --input: 270 60% 96%;
     --ring: 261 49% 43%;
 
-    /* Custom MedMap Variables */
-    --medmap-purple: 261 60% 55%;
-    --medmap-purple-dark: 280 70% 45%;
-    --medmap-purple-light: 270 80% 85%;
-    --medmap-teal: 168 76% 42%;
-    --medmap-red: 6 78% 57%;
-    --medmap-dark: 220 25% 15%;
-    --medmap-gray: 240 15% 60%;
+    /* Custom MedMap Variables - Updated to solid colors */
+    --medmap-purple: 261 50% 40%; /* Deep Purple: #5A339F */
+    --medmap-purple-dark: 261 50% 30%;
+    --medmap-purple-light: 270 50% 95%; /* Light Lavender: #F4EEFB */
+    --medmap-teal: 168 76% 42%; /* Teal: #1ABC9C */
+    --medmap-red: 6 78% 57%; /* Emergency Red: #E74C3C */
+    --medmap-dark: 210 29% 24%; /* Dark Gray: #2C3E50 */
+    --medmap-gray: 240 15% 60%; /* Medium Gray: #7F8C8D */
 
-    /* Navigation specific colors */
-    --nav-bg: 260 60% 25%;
-    --nav-inactive: 260 30% 70%;
-    --nav-hover: 260 50% 85%;
+    /* Navigation specific colors - Updated for the new design */
+    --nav-bg: 220 25% 15%; /* Dark Gray: #2C3E50 */
+    --nav-inactive: 0 0% 100%; /* White for inactive icons */
+    --nav-hover: 0 0% 100%; /* White for hover state */
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(280, 70%, 60%), hsl(261, 60%, 55%));
-    --gradient-secondary: linear-gradient(135deg, hsl(270, 80%, 70%), hsl(280, 70%, 45%));
-    --gradient-emergency: linear-gradient(135deg, hsl(var(--medmap-red)), hsl(6, 78%, 47%));
-    --gradient-surface: linear-gradient(135deg, hsl(270, 50%, 95%), hsl(280, 60%, 90%));
-    --gradient-card: linear-gradient(135deg, hsl(270, 80%, 85%) 0%, hsl(280, 70%, 75%) 100%);
-
+    /* Removed gradients - using solid colors only */
     /* Shadows */
-    --shadow-card: 0 8px 32px hsl(280, 70%, 60% / 0.15);
-    --shadow-emergency: 0 4px 20px hsl(var(--medmap-red) / 0.2);
-    --shadow-float: 0 12px 40px hsl(280, 70%, 60% / 0.25);
-    --shadow-nav: 0 8px 32px hsl(260, 60%, 25% / 0.3);
+    --shadow-card: 0 8px 32px hsl(261, 50%, 40% / 0.15);
+    --shadow-emergency: 0 4px 20px hsl(6, 78%, 57% / 0.2);
+    --shadow-float: 0 12px 40px hsl(261, 50%, 40% / 0.25);
+    --shadow-nav: 0 8px 32px hsl(220, 25%, 15% / 0.3);
 
     --radius: 0.5rem;
 
@@ -141,9 +135,9 @@ All colors MUST be HSL.
 }
 
 @layer components {
-  /* Custom Button Variants */
+  /* Custom Button Variants - Updated to use solid colors */
   .btn-medmap {
-    background: var(--gradient-primary);
+    background: hsl(var(--primary));
     @apply text-primary-foreground font-medium rounded-2xl px-8 py-4 shadow-lg border-0;
     box-shadow: var(--shadow-card);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -155,7 +149,8 @@ All colors MUST be HSL.
   }
   
   .btn-emergency {
-    @apply bg-gradient-to-r from-destructive to-red-600 text-destructive-foreground font-medium rounded-2xl px-8 py-4;
+    background: hsl(var(--destructive));
+    @apply text-destructive-foreground font-medium rounded-2xl px-8 py-4;
     box-shadow: var(--shadow-emergency);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -165,16 +160,16 @@ All colors MUST be HSL.
     box-shadow: 0 12px 40px hsl(var(--medmap-red) / 0.4);
   }
   
-  /* Card Styles */
+  /* Card Styles - Updated to use solid colors */
   .card-medmap {
-    background: var(--gradient-card);
+    background: hsl(var(--card));
     @apply rounded-3xl p-6 border-0 text-medmap-dark;
     box-shadow: var(--shadow-card);
     backdrop-filter: blur(20px);
   }
   
   .card-emergency {
-    @apply bg-gradient-to-br from-destructive/10 to-destructive/20 border-destructive/30;
+    @apply bg-destructive/10 border-destructive/30;
   }
   
   /* Animation Classes */
@@ -192,40 +187,34 @@ All colors MUST be HSL.
 }
 
 @layer utilities {
-  /* Custom Gradients */
-  .bg-gradient-medmap {
-    background: var(--gradient-primary);
+  /* Custom Solid Colors - Removed gradients */
+  .bg-medmap-primary {
+    background: hsl(var(--primary));
   }
   
-  .bg-gradient-secondary {
-    background: var(--gradient-secondary);
+  .bg-medmap-secondary {
+    background: hsl(var(--secondary));
   }
   
-  .bg-gradient-emergency {
-    background: var(--gradient-emergency);
+  .bg-medmap-emergency {
+    background: hsl(var(--destructive));
   }
   
-  .bg-gradient-surface {
-    background: var(--gradient-surface);
+  .bg-medmap-surface {
+    background: hsl(var(--muted));
   }
   
-  .bg-gradient-card {
-    background: var(--gradient-card);
+  .bg-medmap-card {
+    background: hsl(var(--card));
   }
   
-  /* Text Gradients */
-  .text-gradient-medmap {
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+  /* Text Colors */
+  .text-medmap-primary {
+    color: hsl(var(--primary));
   }
   
-  .text-gradient-secondary {
-    background: var(--gradient-secondary);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+  .text-medmap-secondary {
+    color: hsl(var(--secondary));
   }
 }
 

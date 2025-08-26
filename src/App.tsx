@@ -13,6 +13,9 @@ import BuildingsScreen from "./pages/BuildingsScreen";
 import SOSScreen from "./pages/SOSScreen";
 import ProfileScreen from "./pages/ProfileScreen";
 import EditProfileScreen from "./pages/EditProfileScreen";
+import HistoryScreen from "./pages/HistoryScreen";
+import AnalyticsScreen from "./pages/AnalyticsScreen";
+import NavigationDemo from "./pages/NavigationDemo";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,6 +37,9 @@ const App = () => (
             <Route path="/sos" element={<SOSScreen />} />
             <Route path="/profile" element={<ProfileScreen />} />
             <Route path="/edit-profile" element={<EditProfileScreen />} />
+            <Route path="/history" element={<HistoryScreen />} />
+            <Route path="/analytics" element={<AnalyticsScreen />} />
+            <Route path="/nav-demo" element={<NavigationDemo />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
