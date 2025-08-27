@@ -51,18 +51,33 @@ const QuickAccessCards = () => {
       {/* Quick Access Cards */}
       <div className="animate-fade-in-delayed">
         <h2 className="text-lg font-semibold text-foreground mb-4">Quick Access</h2>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-3">
           {quickAccessCards.map((card, index) => (
             <Card 
               key={card.label} 
-              className={`card-medmap p-4 cursor-pointer transition-all hover:scale-105 ${card.color}`}
+              className="bg-medmap-lavender border border-medmap-purple/20 cursor-pointer transition-all hover:scale-[1.02] rounded-2xl overflow-hidden"
               onClick={() => navigate(card.path)}
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="flex flex-col items-center text-center">
-                <card.icon className="w-8 h-8 mb-2 text-primary" />
-                <span className="text-sm font-medium text-foreground mb-1">{card.label}</span>
-                <span className="text-xs text-muted-foreground">{card.description}</span>
+              <div className="grid grid-cols-2 h-20">
+                {/* Left section - Icon and Label */}
+                <div className="flex items-center justify-center bg-white/50 border-r border-medmap-purple/10">
+                  <div className="flex flex-col items-center">
+                    <card.icon className="w-6 h-6 mb-1 text-medmap-purple" />
+                    <span className="text-xs font-medium text-medmap-dark">{card.label}</span>
+                  </div>
+                </div>
+                
+                {/* Right section - Description and Status */}
+                <div className="flex items-center justify-between px-4">
+                  <div className="flex flex-col">
+                    <span className="text-xs text-medmap-gray mb-1">{card.description}</span>
+                    <span className="text-sm font-semibold text-medmap-dark">Available</span>
+                  </div>
+                  <div className="bg-medmap-teal text-white px-3 py-1 rounded-full text-xs font-medium">
+                    Active
+                  </div>
+                </div>
               </div>
             </Card>
           ))}

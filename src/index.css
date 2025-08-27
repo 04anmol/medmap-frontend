@@ -172,6 +172,33 @@ All colors MUST be HSL.
     @apply bg-destructive/10 border-destructive/30;
   }
   
+  /* Icon Component Styles - Colorful Variations */
+  .icon-container {
+    @apply p-3 rounded-xl flex items-center justify-center;
+    transition: all 0.2s ease;
+  }
+  
+  .icon-container.purple {
+    @apply bg-medmap-purple text-white;
+  }
+  
+  .icon-container.teal {
+    @apply bg-medmap-secondary text-white;
+  }
+  
+  .icon-container.red {
+    @apply bg-medmap-emergency text-white;
+  }
+  
+  .icon-container.lavender {
+    background: hsl(var(--medmap-purple-light));
+    color: hsl(var(--medmap-purple));
+  }
+  
+  .icon-container:hover {
+    transform: scale(1.05);
+  }
+  
   /* Animation Classes */
   .animate-slide-up {
     animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -215,6 +242,64 @@ All colors MUST be HSL.
   
   .text-medmap-secondary {
     color: hsl(var(--secondary));
+  }
+  
+  /* Icon Color Variations - Brand Palette */
+  .icon-purple {
+    color: hsl(var(--medmap-purple));
+  }
+  
+  .icon-teal {
+    color: hsl(var(--medmap-teal));
+  }
+  
+  .icon-red {
+    color: hsl(var(--medmap-red));
+  }
+  
+  .icon-dark {
+    color: hsl(var(--medmap-dark));
+  }
+  
+  .icon-gray {
+    color: hsl(var(--medmap-gray));
+  }
+  
+  /* Icon Background Variations */
+  .icon-bg-purple {
+    background-color: hsl(var(--medmap-purple));
+    color: white;
+  }
+  
+  .icon-bg-teal {
+    background-color: hsl(var(--medmap-teal));
+    color: white;
+  }
+  
+  .icon-bg-red {
+    background-color: hsl(var(--medmap-red));
+    color: white;
+  }
+  
+  .icon-bg-lavender {
+    background-color: hsl(var(--medmap-purple-light));
+    color: hsl(var(--medmap-purple));
+  }
+  
+  /* Icon Hover States */
+  .icon-hover-purple:hover {
+    color: hsl(var(--medmap-purple));
+    transition: color 0.2s ease;
+  }
+  
+  .icon-hover-teal:hover {
+    color: hsl(var(--medmap-teal));
+    transition: color 0.2s ease;
+  }
+  
+  .icon-hover-red:hover {
+    color: hsl(var(--medmap-red));
+    transition: color 0.2s ease;
   }
 }
 
