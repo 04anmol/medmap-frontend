@@ -2,6 +2,126 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Mobile-first safety: prevent horizontal overflow */
+html, body, #root {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Hide horizontal scrollbar for capsule scroller on mobile while keeping scroll */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* SOS glow animation: alternates white and red with a soft outer glow */
+@keyframes sosGlow {
+  0% { color: #ffffff; filter: drop-shadow(0 0 0 rgba(239, 68, 68, 0)); }
+  50% { color: #ef4444; filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.85)); }
+  100% { color: #ffffff; filter: drop-shadow(0 0 0 rgba(239, 68, 68, 0)); }
+}
+
+.glow-sos {
+  animation: sosGlow 1.6s ease-in-out infinite;
+}
+
+/* Smooth page transitions */
+.route-fade-enter {
+  opacity: 0.01;
+  transform: translateY(8px);
+}
+.route-fade-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 240ms ease, transform 240ms ease;
+}
+.route-fade-exit {
+  opacity: 1;
+}
+.route-fade-exit-active {
+  opacity: 0.01;
+  transform: translateY(-6px);
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+/* Stronger glow for current location indicator */
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.8), 0 0 10px rgba(34, 197, 94, 0.7); }
+  60% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0), 0 0 16px rgba(34, 197, 94, 0.6); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0), 0 0 10px rgba(34, 197, 94, 0.0); }
+}
+
+.glow-location {
+  background-color: #22c55e; /* emerald-500 */
+  animation: pulseGlow 1.6s ease-out infinite;
+  border-radius: 9999px;
+}
+
+/* Hero banner styles */
+.hero-banner {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: #ef4444; /* red base */
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+}
+.hero-banner::before {
+  /* grid overlay */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.15) 1px, transparent 1px);
+  background-size: 42px 42px, 42px 42px;
+  pointer-events: none;
+}
+.hero-wave {
+  position: absolute;
+  left: 0; right: 0;
+  height: 12px;
+  background-repeat: repeat-x;
+  background-size: 32px 12px;
+  filter: drop-shadow(0 2px 0 rgba(0,0,0,0.06));
+}
+.hero-wave.top { top: 0; transform: translateY(-1px); }
+.hero-wave.bottom { bottom: 0; transform: translateY(1px) rotate(180deg); }
+.hero-wave { 
+  background-image: url('data:image/svg+xml;utf8,\
+  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="12" viewBox="0 0 32 12">\
+    <path d="M0,12 C4,12 4,0 8,0 C12,0 12,12 16,12 C20,12 20,0 24,0 C28,0 28,12 32,12 L32,12 L0,12 Z" fill="%23fff3e6"/>\
+  </svg>');
+}
+.hero-sticker {
+  transform: rotate(-8deg);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.18);
+}
+.hero-sticker.blue { background-color: #2563eb; color: #ffffff; }
+
+/* Impact banner (full-width) with purple waves */
+.impact-banner {
+  position: relative;
+  background: linear-gradient(180deg, rgba(74, 29, 150, 0.15), rgba(74, 29, 150, 0.2));
+}
+.impact-wave {
+  position: absolute;
+  left: 0; right: 0;
+  height: 10px;
+  background-repeat: repeat-x;
+  background-position: center;
+  background-size: 14px 10px;
+  background-image: radial-gradient(circle, #4a1d96 2.5px, rgba(0,0,0,0) 3px);
+}
+.impact-wave.top { top: 0; transform: translateY(-1px); }
+.impact-wave.bottom { bottom: 0; transform: translateY(1px); }
+
+/* Floating hover animation for hero logo */
+@keyframes floatY {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+.float-hovering { animation: floatY 3s ease-in-out infinite; }
+.hero-sticker.green { background-color: #22c55e; color: #052e16; }
+
 /* Definition of the design system. All colors, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */

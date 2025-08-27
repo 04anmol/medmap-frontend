@@ -3,10 +3,13 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Building, Heart, Droplets, Wind, MapPin, Phone, Clock, Star } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import Navigation from '@/components/Navigation';
 
 const BuildingsScreen = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [open, setOpen] = useState(false);
+  const [activeFacility, setActiveFacility] = useState<any | null>(null);
 
   const categories = [
     { id: 'all', label: 'All', icon: Building },
@@ -247,6 +250,48 @@ const BuildingsScreen = () => {
     ? facilities 
     : facilities.filter(f => f.type === selectedCategory);
 
+  // Type-specific styling for card border, background gradient, and buttons
+  const getTypeStyles = (type: 'hospital' | 'blood' | 'oxygen') => {
+    switch (type) {
+      case 'hospital':
+        return {
+          gradient: 'bg-gradient-to-r from-violet-50 to-violet-100',
+          borderClass: 'border-violet-700',
+          borderColor: '#5b21b6',
+          dividerClass: 'border-violet-700/30',
+          outlineBtn: 'border-violet-700 text-violet-700',
+          solidBtn: 'bg-violet-700 text-white',
+        };
+      case 'blood':
+        return {
+          gradient: 'bg-gradient-to-r from-rose-50 to-rose-100',
+          borderClass: 'border-rose-600',
+          borderColor: '#e11d48',
+          dividerClass: 'border-rose-600/30',
+          outlineBtn: 'border-rose-600 text-rose-600',
+          solidBtn: 'bg-rose-600 text-white',
+        };
+      case 'oxygen':
+        return {
+          gradient: 'bg-gradient-to-r from-cyan-50 to-cyan-100',
+          borderClass: 'border-cyan-600',
+          borderColor: '#0891b2',
+          dividerClass: 'border-cyan-600/30',
+          outlineBtn: 'border-cyan-600 text-cyan-600',
+          solidBtn: 'bg-cyan-600 text-white',
+        };
+      default:
+        return {
+          gradient: 'bg-medmap-lavender',
+          borderClass: 'border-medmap-purple',
+          borderColor: '#6b3fa0',
+          dividerClass: 'border-medmap-purple/30',
+          outlineBtn: 'border-medmap-purple text-medmap-purple',
+          solidBtn: 'bg-medmap-purple text-white',
+        };
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background pb-24">
       {/* Header */}
@@ -260,21 +305,21 @@ const BuildingsScreen = () => {
       </div>
 
       {/* Category Filter */}
-      <div className="px-6 mb-6">
-        <div className="bg-muted rounded-xl p-1 shadow-sm">
-          <div className="grid grid-cols-4 gap-1">
+      <div className="px-6 mb-6 flex justify-center">
+        <div className="inline-flex bg-neutral-900 text-neutral-200 rounded-2xl p-3 shadow-lg border border-neutral-800 overflow-hidden">
+          <div className="flex flex-wrap gap-3 md:flex-nowrap md:gap-3 md:overflow-x-auto md:whitespace-nowrap no-scrollbar">
             {categories.map((category) => (
               <button
                 key={category.id}
                 onClick={() => setSelectedCategory(category.id)}
-                className={`flex items-center justify-center px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                className={`md:shrink-0 flex items-center justify-center px-5 py-3 rounded-full text-sm font-medium transition-all duration-200 ${
                   selectedCategory === category.id 
-                    ? 'bg-primary text-primary-foreground shadow-sm' 
-                    : 'text-muted-foreground hover:text-foreground hover:bg-background'
+                    ? 'bg-medmap-purple text-white shadow-md' 
+                    : 'text-neutral-400 hover:text-neutral-200'
                 }`}
               >
-                <category.icon className="w-4 h-4 mr-2" />
-                {category.label}
+                <category.icon className={`w-5 h-5 ${selectedCategory === category.id ? 'mr-2' : 'mr-2'}`} />
+                {selectedCategory === category.id && category.label}
               </button>
             ))}
           </div>
@@ -289,12 +334,14 @@ const BuildingsScreen = () => {
       </div>
 
       {/* Facilities List */}
-      <div className="px-6 space-y-4">
-        {filteredFacilities.map((facility) => (
-          <Card key={facility.id} className="card-medmap">
-            <div className="space-y-4">
+      <div className="px-4 sm:px-6 space-y-4">
+        {filteredFacilities.map((facility) => {
+          const typeStyles = getTypeStyles(facility.type as 'hospital' | 'blood' | 'oxygen');
+          return (
+          <Card key={facility.id} className={`rounded-2xl overflow-hidden border-2 ${typeStyles.gradient} ${typeStyles.borderClass}`} style={{ borderColor: typeStyles.borderColor }}>
+            <div className="space-y-0">
               {/* Header */}
-              <div className="flex items-start justify-between">
+              <div className={`flex items-start justify-between px-4 py-3 border-b ${typeStyles.dividerClass}` }>
                 <div className="flex-1">
                   <h3 className="font-semibold text-foreground text-lg">{facility.name}</h3>
                   <div className="flex items-center mt-1 space-x-4">
@@ -308,15 +355,15 @@ const BuildingsScreen = () => {
                     </div>
                   </div>
                 </div>
-                <Button size="sm" variant="outline" className="ml-4">
+                <Button size="sm" variant="outline" className={`ml-4 ${typeStyles.outlineBtn}`}>
                   <Phone className="w-4 h-4 mr-2" />
                   Call
                 </Button>
               </div>
 
               {/* Services */}
-              <div>
-                <p className="text-sm font-medium text-foreground mb-2">Services:</p>
+              <div className={`px-4 py-3 border-b ${typeStyles.dividerClass}` }>
+                <p className="text-sm font-medium text-foreground mb-2">Services</p>
                 <div className="flex flex-wrap gap-2">
                   {facility.services.map((service) => (
                     <Badge key={service} variant="secondary" className="text-xs">
@@ -327,8 +374,8 @@ const BuildingsScreen = () => {
               </div>
 
               {/* Availability */}
-              <div>
-                <p className="text-sm font-medium text-foreground mb-2">Current Availability:</p>
+              <div className={`px-4 py-3 border-b ${typeStyles.dividerClass}` }>
+                <p className="text-sm font-medium text-foreground mb-2">Current Availability</p>
                 <div className="space-y-1">
                   {facility.availability.icu && (
                     <div className="flex items-center justify-between text-sm">
@@ -354,22 +401,86 @@ const BuildingsScreen = () => {
               </div>
 
               {/* Address */}
-              <div className="pt-2 border-t border-border">
+              <div className="px-4 py-3">
                 <p className="text-sm text-muted-foreground">{facility.address}</p>
                 <div className="flex justify-between items-center mt-2">
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" className={`${typeStyles.outlineBtn}`}>
                     <MapPin className="w-4 h-4 mr-2" />
                     Directions
                   </Button>
-                  <Button size="sm" className="bg-primary text-primary-foreground">
+                  <Button size="sm" className={`${typeStyles.solidBtn}`} onClick={() => { setActiveFacility(facility); setOpen(true); }}>
                     View Details
                   </Button>
                 </div>
               </div>
             </div>
           </Card>
-        ))}
+          );
+        })}
       </div>
+
+      {/* Details Modal */}
+      <Dialog open={open} onOpenChange={setOpen}>
+        {activeFacility && (
+          <DialogContent 
+            className={`max-w-md w-[92vw] p-0 overflow-hidden rounded-2xl border-2`}
+            style={{ 
+              borderColor: getTypeStyles(activeFacility.type as 'hospital' | 'blood' | 'oxygen').borderColor,
+              boxShadow: `0 0 0 3px ${getTypeStyles(activeFacility.type as 'hospital' | 'blood' | 'oxygen').borderColor}33, 0 0 20px ${getTypeStyles(activeFacility.type as 'hospital' | 'blood' | 'oxygen').borderColor}55`
+            }}
+          >
+            <div>
+              {/* Enlarged dummy map area with subtle gradient based on type */}
+              <div className={`h-64 w-full flex items-center justify-center ${getTypeStyles(activeFacility.type as 'hospital' | 'blood' | 'oxygen').gradient}`}>
+                <div className="text-center">
+                  <MapPin className="w-10 h-10 mx-auto mb-2 text-foreground" />
+                  <span className="text-muted-foreground text-sm">Map preview for {activeFacility.name}</span>
+                </div>
+              </div>
+
+              <div className="p-4 space-y-4">
+                <DialogHeader>
+                  <DialogTitle className="text-base font-semibold">{activeFacility.name}</DialogTitle>
+                </DialogHeader>
+
+                {/* Quick facts */}
+                <div className="grid grid-cols-2 gap-3 text-sm">
+                  <div className="flex items-center"><MapPin className="w-4 h-4 mr-2" />{activeFacility.distance || 'Nearby'}</div>
+                  <div className="flex items-center"><Star className="w-4 h-4 text-yellow-500 mr-2" />{activeFacility.rating}</div>
+                </div>
+
+                {/* Type-specific extra info */}
+                {activeFacility.type === 'hospital' && (
+                  <div className="space-y-1 text-sm">
+                    <div className="flex items-center justify-between"><span className="text-muted-foreground">ICU Beds</span><span className="font-medium">{activeFacility.availability?.icu ?? 0}</span></div>
+                    <div className="flex items-center justify-between"><span className="text-muted-foreground">Oxygen</span><span className="font-medium">{activeFacility.availability?.oxygen || 'Unknown'}</span></div>
+                    <div className="flex items-center justify-between"><span className="text-muted-foreground">Blood</span><span className="font-medium">{activeFacility.availability?.blood || 'Unknown'}</span></div>
+                  </div>
+                )}
+                {activeFacility.type === 'blood' && (
+                  <div className="space-y-1 text-sm">
+                    <div className="flex items-center justify-between"><span className="text-muted-foreground">Available Types</span><span className="font-medium">{activeFacility.availability?.blood || 'See center'}</span></div>
+                    <div className="flex items-center justify-between"><span className="text-muted-foreground">Contact</span><span className="font-medium">{activeFacility.phone}</span></div>
+                  </div>
+                )}
+                {activeFacility.type === 'oxygen' && (
+                  <div className="space-y-1 text-sm">
+                    <div className="flex items-center justify-between"><span className="text-muted-foreground">Oxygen</span><span className="font-medium">{activeFacility.availability?.oxygen || 'Unknown'}</span></div>
+                    <div className="flex items-center justify-between"><span className="text-muted-foreground">Delivery</span><span className="font-medium">24/7 if listed</span></div>
+                  </div>
+                )}
+
+                {/* Address and actions */}
+                <div className="pt-2 text-sm text-muted-foreground">{activeFacility.address}</div>
+                <div className="flex justify-end gap-2">
+                  <Button variant="outline" size="sm" className={getTypeStyles(activeFacility.type as 'hospital' | 'blood' | 'oxygen').outlineBtn}><MapPin className="w-4 h-4 mr-2" />Directions</Button>
+                  <Button size="sm" className={getTypeStyles(activeFacility.type as 'hospital' | 'blood' | 'oxygen').solidBtn}>Call</Button>
+                </div>
+              </div>
+            </div>
+          </DialogContent>
+        )}
+      </Dialog>
 
       <Navigation />
     </div>

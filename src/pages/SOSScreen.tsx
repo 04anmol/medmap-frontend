@@ -234,6 +234,7 @@ const SOSScreen = () => {
             </Button>
           </div>
         </div>
+        <Navigation />
       </div>
     );
   }

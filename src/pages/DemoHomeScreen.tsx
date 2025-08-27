@@ -18,17 +18,17 @@ const DemoHomeScreen = () => {
   };
 
   const quickAccessCards = [
-    { icon: Ambulance, label: 'Ambulance', color: 'bg-destructive/10 border-destructive/20' },
-    { icon: Heart, label: 'ICU Beds', color: 'bg-primary/10 border-primary/20' },
-    { icon: Droplets, label: 'Blood Units', color: 'bg-secondary/10 border-secondary/20' },
-    { icon: Wind, label: 'Oxygen', color: 'bg-medmap-teal/10 border-medmap-teal/20' },
+    { icon: Ambulance, label: 'Ambulance', color: 'border-2 border-rose-500/70 bg-gradient-to-r from-rose-50 to-rose-100' },
+    { icon: Heart, label: 'ICU Beds', color: 'border-2 border-violet-600/70 bg-gradient-to-r from-violet-50 to-violet-100' },
+    { icon: Wind, label: 'Oxygen', color: 'border-2 border-cyan-600/70 bg-gradient-to-r from-cyan-50 to-cyan-100' },
+    { icon: Droplets, label: 'Blood Units', color: 'border-2 border-red-500/70 bg-gradient-to-r from-red-50 to-red-100' },
   ];
 
   const categories = [
-    { icon: Heart, label: 'Cardiology' },
-    { icon: Phone, label: 'Emergency' },
-    { icon: MapPin, label: 'Nearby' },
-    { icon: Droplets, label: 'Pharmacy' },
+    { icon: Heart, label: 'Cardiology', bg: 'bg-rose-500', fg: 'text-white' },
+    { icon: Phone, label: 'Emergency', bg: 'bg-orange-500', fg: 'text-white' },
+    { icon: MapPin, label: 'Nearby', bg: 'bg-cyan-600', fg: 'text-white' },
+    { icon: Droplets, label: 'Pharmacy', bg: 'bg-emerald-500', fg: 'text-white' },
   ];
 
   return (
@@ -73,7 +73,18 @@ const DemoHomeScreen = () => {
                 onClick={handleGetStarted}
               >
                 <div className="flex flex-col items-center text-center">
-                  <card.icon className="w-8 h-8 mb-2 text-primary" />
+                  {card.label === 'Ambulance' && (
+                    <card.icon className="w-8 h-8 mb-2 text-destructive" />
+                  )}
+                  {card.label === 'ICU Beds' && (
+                    <card.icon className="w-8 h-8 mb-2 text-primary" />
+                  )}
+                  {card.label === 'Blood Units' && (
+                    <card.icon className="w-8 h-8 mb-2 text-red-500" />
+                  )}
+                  {card.label === 'Oxygen' && (
+                    <card.icon className="w-8 h-8 mb-2 text-cyan-600" />
+                  )}
                   <span className="text-sm font-medium text-foreground">{card.label}</span>
                 </div>
               </Card>
@@ -91,8 +102,8 @@ const DemoHomeScreen = () => {
                 className="flex flex-col items-center p-4 cursor-pointer transition-all hover:scale-105"
                 onClick={handleGetStarted}
               >
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-2 border border-primary/20">
-                  <category.icon className="w-6 h-6 text-primary" />
+                <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-2 border border-black/5 ${category.bg}`}>
+                  <category.icon className={`w-6 h-6 ${category.fg}`} />
                 </div>
                 <span className="text-xs font-medium text-center text-foreground">{category.label}</span>
               </div>

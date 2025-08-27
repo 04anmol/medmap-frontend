@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import medmapLogo from '@/assets/medmap-logo.png';
+// Logo served from public folder
 
 const IntroScreen = () => {
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ const IntroScreen = () => {
           }`}
         >
           <img 
-            src={medmapLogo} 
+            src={"/Untitled_design-removebg-preview.png"}
             alt="MedMap Logo" 
             className="w-32 h-32 md:w-40 md:h-40 object-contain"
             style={{

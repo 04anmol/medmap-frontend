@@ -11,39 +11,37 @@ const QuickAccessCards = () => {
       icon: Ambulance, 
       label: 'Emergency', 
       description: 'Request ambulance',
-      color: 'bg-destructive/10 border-destructive/20 hover:bg-destructive/15',
+      color: 'border-2 border-rose-500/70 bg-gradient-to-r from-rose-50 to-rose-100',
       path: '/sos'
     },
     { 
       icon: Heart, 
       label: 'ICU Beds', 
       description: 'Find available beds',
-      color: 'bg-primary/10 border-primary/20 hover:bg-primary/15',
-      path: '/buildings'
-    },
-    { 
-      icon: Droplets, 
-      label: 'Blood Units', 
-      description: 'Blood availability',
-      color: 'bg-secondary/10 border-secondary/20 hover:bg-secondary/15',
+      color: 'border-2 border-violet-600/70 bg-gradient-to-r from-violet-50 to-violet-100',
       path: '/buildings'
     },
     { 
       icon: Wind, 
       label: 'Oxygen', 
       description: 'Oxygen suppliers',
-      color: 'bg-secondary/10 border-secondary/20 hover:bg-secondary/15',
+      color: 'border-2 border-cyan-600/70 bg-gradient-to-r from-cyan-50 to-cyan-100',
+      path: '/buildings'
+    },
+    { 
+      icon: Droplets, 
+      label: 'Blood Units', 
+      description: 'Blood availability',
+      color: 'border-2 border-red-500/70 bg-gradient-to-r from-red-50 to-red-100',
       path: '/buildings'
     },
   ];
 
   const categories = [
-    { icon: Heart, label: 'Cardiology' },
-    { icon: Phone, label: 'Emergency' },
-    { icon: MapPin, label: 'Nearby' },
-    { icon: Building, label: 'Hospitals' },
-    { icon: Users, label: 'Specialists' },
-    { icon: Wind, label: 'Pharmacy' },
+    { icon: Phone, label: 'Emergency', bg: 'bg-orange-500', fg: 'text-white' },
+    { icon: MapPin, label: 'Nearby', bg: 'bg-cyan-600', fg: 'text-white' },
+    { icon: Building, label: 'Hospitals', bg: 'bg-indigo-500', fg: 'text-white' },
+    { icon: Wind, label: 'Oxygen', bg: 'bg-emerald-500', fg: 'text-white' },
   ];
 
   return (
@@ -55,7 +53,7 @@ const QuickAccessCards = () => {
           {quickAccessCards.map((card, index) => (
             <Card 
               key={card.label} 
-              className="bg-medmap-lavender border border-medmap-purple/20 cursor-pointer transition-all hover:scale-[1.02] rounded-2xl overflow-hidden"
+              className={`cursor-pointer transition-all hover:scale-[1.02] rounded-2xl overflow-hidden ${card.color}`}
               onClick={() => navigate(card.path)}
               style={{ animationDelay: `${index * 0.1}s` }}
             >
@@ -63,7 +61,19 @@ const QuickAccessCards = () => {
                 {/* Left section - Icon and Label */}
                 <div className="flex items-center justify-center bg-white/50 border-r border-medmap-purple/10">
                   <div className="flex flex-col items-center">
-                    <card.icon className="w-6 h-6 mb-1 text-medmap-purple" />
+                    {/* Icon colors per card vibe */}
+                    {card.label === 'Emergency' && (
+                      <card.icon className="w-6 h-6 mb-1 text-destructive" />
+                    )}
+                    {card.label === 'ICU Beds' && (
+                      <card.icon className="w-6 h-6 mb-1 text-primary" />
+                    )}
+                    {card.label === 'Blood Units' && (
+                      <card.icon className="w-6 h-6 mb-1 text-red-500" />
+                    )}
+                    {card.label === 'Oxygen' && (
+                      <card.icon className="w-6 h-6 mb-1 text-cyan-600" />
+                    )}
                     <span className="text-xs font-medium text-medmap-dark">{card.label}</span>
                   </div>
                 </div>
@@ -84,21 +94,19 @@ const QuickAccessCards = () => {
         </div>
       </div>
 
-      {/* Categories */}
+      {/* Categories - Windows logo layout (2x2) */}
       <div className="animate-fade-in-delayed" style={{ animationDelay: '0.6s' }}>
         <h2 className="text-lg font-semibold text-foreground mb-4">Categories</h2>
-        <div className="grid grid-cols-3 gap-4">
-          {categories.map((category, index) => (
-            <div 
-              key={category.label} 
-              className="flex flex-col items-center p-4 cursor-pointer transition-all hover:scale-105"
+        <div className="grid grid-cols-2 gap-3">
+          {categories.map((category) => (
+            <button
+              key={category.label}
               onClick={() => navigate('/buildings')}
+              className={`aspect-square rounded-xl flex flex-col items-center justify-center gap-2 shadow-sm transition-transform active:scale-[0.98] ${category.bg}`}
             >
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-2 border border-primary/20 hover:bg-primary/15 transition-colors">
-                <category.icon className="w-6 h-6 text-primary" />
-              </div>
-              <span className="text-xs font-medium text-center text-foreground">{category.label}</span>
-            </div>
+              <category.icon className={`w-7 h-7 ${category.fg}`} />
+              <span className={`text-xs font-medium ${category.fg}`}>{category.label}</span>
+            </button>
           ))}
         </div>
       </div>
