@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Home, Building, AlertTriangle } from 'lucide-react';
+import { Home, Building, AlertTriangle, HelpCircle } from 'lucide-react';
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -12,6 +12,12 @@ const Navigation = () => {
       label: 'Home', 
       path: '/home',
       active: location.pathname === '/home'
+    },
+    { 
+      icon: HelpCircle, 
+      label: 'Health Info', 
+      path: '/health-info',
+      active: location.pathname === '/health-info'
     },
     { 
       icon: Building, 
@@ -34,9 +40,9 @@ const Navigation = () => {
       <div className="relative flex items-center">
         {/* Dynamic bubble highlight */}
         <div 
-          className="absolute top-0 h-14 w-14 bg-accent rounded-full transition-all duration-300 ease-out shadow-lg"
+          className="absolute top-0 h-14 w-14 bg-accent rounded-full transition-all duration-400 ease-out shadow-lg"
           style={{
-            transform: `translateX(${activeIndex * 64 + 4}px)`,
+            transform: `translateX(${activeIndex * 64 + 2}px)`,
           }}
         />
         
@@ -44,10 +50,10 @@ const Navigation = () => {
           <button
             key={item.path}
             onClick={() => navigate(item.path)}
-            className="relative z-10 inline-flex items-center justify-center w-14 h-14 rounded-full p-0 leading-none transition-all duration-200 mx-1"
+            className="relative z-10 inline-flex items-center justify-center w-14 h-14 rounded-full p-0 leading-none transition-all duration-300 ease-out mx-1 hover:scale-110 active:scale-95"
           >
             <item.icon 
-              className={`w-6 h-6 transition-all duration-200 align-middle block -translate-x-[2px] ${
+              className={`w-6 h-6 transition-all duration-300 ease-out align-middle block -translate-x-[2px] ${
                 item.active 
                   ? 'text-accent-foreground' 
                   : `text-nav-inactive hover:text-nav-hover ${item.label === 'SOS' ? 'glow-sos' : ''}`

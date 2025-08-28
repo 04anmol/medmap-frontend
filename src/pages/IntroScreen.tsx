@@ -27,7 +27,7 @@ const IntroScreen = () => {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen bg-gradient-surface flex flex-col items-center justify-center p-6">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6">
       {/* Logo Container */}
       <div className="mb-8 relative">
         <div 
@@ -45,10 +45,7 @@ const IntroScreen = () => {
           />
         </div>
         
-        {/* Floating animation overlay */}
-        {showLogo && (
-          <div className="absolute inset-0 bg-gradient-medmap opacity-20 rounded-full blur-lg animate-pulse-gentle"></div>
-        )}
+
       </div>
 
       {/* App Name */}
@@ -57,7 +54,7 @@ const IntroScreen = () => {
           showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
         }`}
       >
-        <h1 className="text-4xl md:text-5xl font-bold text-gradient-medmap text-center mb-2">
+        <h1 className="text-4xl md:text-5xl font-bold text-primary text-center mb-2">
           MedMap
         </h1>
         <p className="text-medmap-gray text-center text-lg">

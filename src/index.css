@@ -12,6 +12,10 @@ html, body, #root {
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
+/* Hide scrollbar for stats carousel */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
 /* SOS glow animation: alternates white and red with a soft outer glow */
 @keyframes sosGlow {
   0% { color: #ffffff; filter: drop-shadow(0 0 0 rgba(239, 68, 68, 0)); }
@@ -23,23 +27,265 @@ html, body, #root {
   animation: sosGlow 1.6s ease-in-out infinite;
 }
 
-/* Smooth page transitions */
-.route-fade-enter {
-  opacity: 0.01;
-  transform: translateY(8px);
+/* Enhanced smooth page transitions */
+.route-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
+
+.route-fade-enter {
+  opacity: 0;
+  transform: translateY(20px) scale(0.98);
+  filter: blur(2px);
+}
+
 .route-fade-enter-active {
   opacity: 1;
-  transform: translateY(0);
-  transition: opacity 240ms ease, transform 240ms ease;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+  transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .route-fade-exit {
   opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
 }
+
 .route-fade-exit-active {
-  opacity: 0.01;
-  transform: translateY(-6px);
-  transition: opacity 200ms ease, transform 200ms ease;
+  opacity: 0;
+  transform: translateY(-20px) scale(0.98);
+  filter: blur(2px);
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Global smooth transitions for all interactive elements */
+* {
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, 
+              transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Enhanced button transitions */
+button, .btn, [role="button"] {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+button:hover, .btn:hover, [role="button"]:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+button:active, .btn:active, [role="button"]:active {
+  transform: translateY(0);
+  transition: all 0.1s ease;
+}
+
+/* Card hover effects */
+.card, .card-medmap {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.card:hover, .card-medmap:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Navigation transitions */
+nav, nav * {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Link transitions */
+a {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Input and form transitions */
+input, textarea, select {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Modal and dialog transitions */
+[data-state="open"] {
+  animation: modalOpen 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-state="closed"] {
+  animation: modalClose 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalOpen {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes modalClose {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+}
+
+/* Enhanced animation classes for smooth transitions */
+.animate-slide-up {
+  animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-fade-in-delayed {
+  animation: fadeInDelayed 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-pulse-gentle {
+  animation: pulseGentle 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-float-smooth {
+  animation: floatSmooth 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDelayed {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseGentle {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 0.9;
+  }
+}
+
+@keyframes floatSmooth {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced focus states for accessibility */
+button:focus-visible,
+input:focus-visible,
+a:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+  transition: outline 0.2s ease;
+}
+
+/* Loading states */
+.loading {
+  opacity: 0.7;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+/* Staggered animations for lists */
+.stagger-item {
+  animation: staggerIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.stagger-item:nth-child(1) { animation-delay: 0.1s; }
+.stagger-item:nth-child(2) { animation-delay: 0.2s; }
+.stagger-item:nth-child(3) { animation-delay: 0.3s; }
+.stagger-item:nth-child(4) { animation-delay: 0.4s; }
+.stagger-item:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes staggerIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Stronger glow for current location indicator */
@@ -288,6 +534,14 @@ All colors MUST be HSL.
     backdrop-filter: blur(20px);
   }
   
+  .card-medmap-location {
+    background: hsl(var(--primary)) !important;
+    color: hsl(var(--primary-foreground)) !important;
+    @apply rounded-3xl p-6 border-0;
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(20px);
+  }
+  
   .card-emergency {
     @apply bg-destructive/10 border-destructive/30;
   }
@@ -406,6 +660,11 @@ All colors MUST be HSL.
     color: hsl(var(--medmap-purple));
   }
   
+  /* Missing gradient class for MedMap */
+  .bg-gradient-medmap {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
+  }
+  
   /* Icon Hover States */
   .icon-hover-purple:hover {
     color: hsl(var(--medmap-purple));
@@ -462,5 +721,26 @@ All colors MUST be HSL.
   }
   50% {
     transform: translateY(-10px) rotate(5deg);
+  }
+}
+
+@keyframes wiggle {
+  0%, 100% {
+    transform: translateX(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateX(-8px) rotate(-2deg);
+  }
+  75% {
+    transform: translateX(8px) rotate(2deg);
+  }
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
   }
 }

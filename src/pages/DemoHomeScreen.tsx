@@ -1,19 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '@/contexts/UserContext';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Ambulance, Heart, Droplets, Wind, MapPin, Phone } from 'lucide-react';
+import { Ambulance, Heart, Droplets, Wind, MapPin, Phone, User } from 'lucide-react';
 
 const DemoHomeScreen = () => {
   const navigate = useNavigate();
   const { isLoggedIn, isFirstTime } = useUser();
+  const [showUserTypeModal, setShowUserTypeModal] = useState(false);
 
   const handleGetStarted = () => {
-    if (isLoggedIn) {
-      navigate('/home');
-    } else {
-      navigate('/signup');
+    setShowUserTypeModal(true);
+  };
+
+  const handleUserTypeSelect = (userType: 'ambulance' | 'user') => {
+    setShowUserTypeModal(false);
+    if (userType === 'user') {
+      if (isLoggedIn) {
+        navigate('/home');
+      } else {
+        navigate('/signup');
+      }
+    } else if (userType === 'ambulance') {
+      // TODO: Navigate to ambulance captain interface
+      console.log('Ambulance Captain selected');
     }
   };
 
@@ -54,6 +65,11 @@ const DemoHomeScreen = () => {
       <div className="pt-20 pb-24 px-6">
         {/* Greeting */}
         <div className="text-center mb-8 animate-slide-up">
+          <img 
+            src="/Untitled_design-removebg-preview.png"
+            alt="MedMap Logo" 
+            className="w-32 h-32 mx-auto mb-4 object-contain animate-wiggle"
+          />
           <h1 className="text-2xl font-bold text-foreground mb-2">
             Welcome to MedMap
           </h1>
@@ -127,10 +143,50 @@ const DemoHomeScreen = () => {
 
       {/* Demo Navigation Hint */}
       <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2">
-        <div className="bg-medmap-lavender/90 backdrop-blur-sm px-4 py-2 rounded-full border border-primary/20">
-          <span className="text-xs text-primary">Tap any option to continue</span>
+        <div className="bg-medmap-lavender/90 backdrop-blur-sm px-6 py-3 rounded-full border border-primary/20 w-80 flex items-center justify-center">
+          <span className="text-sm font-bold text-primary">Tap any option to continue</span>
         </div>
       </div>
+
+      {/* User Type Selection Modal */}
+      {showUserTypeModal && (
+        <div 
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+          onClick={() => setShowUserTypeModal(false)}
+        >
+                      <div 
+              className="bg-white rounded-3xl p-8 max-w-md w-full mx-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+            <h2 className="text-2xl font-bold text-center mb-8 text-foreground">
+              Choose Your Role
+            </h2>
+            <div className="flex flex-col gap-6">
+              {/* Captain with Ambulance Icon */}
+              <div 
+                className="bg-red-500 rounded-full px-8 py-4 cursor-pointer transition-all hover:scale-105 flex items-center justify-center w-full"
+                onClick={() => handleUserTypeSelect('ambulance')}
+              >
+                <div className="flex items-center space-x-4">
+                  <Ambulance className="w-8 h-8 text-white" />
+                  <span className="text-white font-semibold text-xl">Captain</span>
+                </div>
+              </div>
+              
+              {/* User with User Icon */}
+              <div 
+                className="bg-blue-500 rounded-full px-8 py-4 cursor-pointer transition-all hover:scale-105 flex items-center justify-center w-full"
+                onClick={() => handleUserTypeSelect('user')}
+              >
+                <div className="flex items-center space-x-4">
+                  <span className="text-white font-semibold text-xl">User</span>
+                  <User className="w-8 h-8 text-white" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
