@@ -23,6 +23,7 @@ const SOSScreen = () => {
     emergencyType: '',
     additionalInfo: '',
   });
+  const [addressConfirmed, setAddressConfirmed] = useState(false);
 
   const nearbyAmbulances = [
     { id: 1, distance: '2.3 miles', eta: '8 mins', driver: 'John Martinez', phone: '+1 (555) 0123' },
@@ -51,6 +52,28 @@ const SOSScreen = () => {
     toast({
       title: "Emergency request sent!",
       description: "Ambulance is on the way",
+      variant: "success",
+    });
+  };
+
+  const handleCancelEmergency = () => {
+    setEmergencyStep('initial');
+    setEmergencyData({
+      location: 'current',
+      customAddress: '',
+      forSomeoneElse: false,
+      patientName: '',
+      patientAge: '',
+      bloodType: '',
+      needsOxygen: false,
+      needsBlood: false,
+      emergencyType: '',
+      additionalInfo: '',
+    });
+    toast({
+      title: "Emergency request cancelled",
+      description: "You can start a new request anytime",
+      variant: "info",
     });
   };
 
@@ -146,12 +169,15 @@ const SOSScreen = () => {
 
           <div className="space-y-6">
             {/* Patient Information */}
-            <Card className="card-medmap">
+            <Card className="card-medmap" style={{
+              background: 'linear-gradient(135deg, hsl(var(--destructive) / 0.6) 0%, hsl(var(--destructive) / 0.4) 50%, hsl(var(--destructive) / 0.5) 100%)'
+            }}>
               <h3 className="font-semibold text-foreground mb-4">Patient Information</h3>
               
               <div className="space-y-4">
                 <div className="flex items-center space-x-2">
                   <Switch 
+                    className="switch-purple"
                     checked={emergencyData.forSomeoneElse}
                     onCheckedChange={(checked) => 
                       setEmergencyData(prev => ({ ...prev, forSomeoneElse: checked }))
@@ -200,12 +226,15 @@ const SOSScreen = () => {
             </Card>
 
             {/* Medical Requirements */}
-            <Card className="card-medmap">
+            <Card className="card-medmap" style={{
+              background: 'linear-gradient(135deg, hsl(var(--destructive) / 0.6) 0%, hsl(var(--destructive) / 0.4) 50%, hsl(var(--destructive) / 0.5) 100%)'
+            }}>
               <h3 className="font-semibold text-foreground mb-4">Medical Requirements</h3>
               
               <div className="space-y-4">
                 <div className="flex items-center space-x-2">
                   <Switch 
+                    className="switch-purple"
                     checked={emergencyData.needsOxygen}
                     onCheckedChange={(checked) => 
                       setEmergencyData(prev => ({ ...prev, needsOxygen: checked }))
@@ -217,6 +246,7 @@ const SOSScreen = () => {
 
                 <div className="flex items-center space-x-2">
                   <Switch 
+                    className="switch-purple"
                     checked={emergencyData.needsBlood}
                     onCheckedChange={(checked) => 
                       setEmergencyData(prev => ({ ...prev, needsBlood: checked }))
@@ -228,9 +258,17 @@ const SOSScreen = () => {
               </div>
             </Card>
 
-            <Button onClick={handleSubmitDetails} className="w-full btn-emergency">
+            <Button onClick={handleSubmitDetails} className="w-full btn-emergency text-lg font-semibold py-6">
               <Ambulance className="w-5 h-5 mr-2" />
               Confirm Emergency Request
+            </Button>
+            
+            <Button 
+              onClick={handleCancelEmergency} 
+              variant="outline" 
+              className="w-full border-red-500 border-2 text-red-700 hover:bg-red-50 font-medium rounded-2xl px-8 py-4"
+            >
+              Cancel
             </Button>
           </div>
         </div>
@@ -251,47 +289,107 @@ const SOSScreen = () => {
 
       {/* Location Selection */}
       <div className="px-6 pt-0">
-        <Card className="card-medmap mb-6 rounded-t-none">
+        <Card className="card-medmap mb-6 rounded-t-none" style={{
+          background: 'linear-gradient(135deg, hsl(var(--destructive) / 0.6) 0%, hsl(var(--destructive) / 0.4) 50%, hsl(var(--destructive) / 0.5) 100%)'
+        }}>
           <h3 className="font-semibold text-foreground mb-4">Emergency Location</h3>
           
           <div className="space-y-4">
-            <div className="space-y-2">
+            <div className="space-y-3">
               <Label>Location</Label>
-              <Select 
-                value={emergencyData.location}
-                onValueChange={(value) => setEmergencyData(prev => ({ ...prev, location: value }))}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="current">Use Current Location</SelectItem>
-                  <SelectItem value="custom">Enter Custom Address</SelectItem>
-                </SelectContent>
-              </Select>
+              <div className="flex flex-col gap-3">
+                <button
+                  onClick={() => setEmergencyData(prev => ({ ...prev, location: 'current' }))}
+                  className={`flex items-center gap-3 p-4 rounded-lg border-2 transition-all duration-200 ${
+                    emergencyData.location === 'current'
+                      ? 'border-red-500 bg-red-50 text-red-700'
+                      : 'border-gray-200 bg-white hover:border-gray-300 text-gray-700'
+                  }`}
+                >
+                  <MapPin className="w-5 h-5" />
+                  <div className="text-left">
+                    <div className="font-medium">Use Current Location</div>
+                    <div className="text-sm opacity-70">Automatically detect your location</div>
+                  </div>
+                </button>
+                
+                <button
+                  onClick={() => setEmergencyData(prev => ({ ...prev, location: 'custom' }))}
+                  className={`flex items-center gap-3 p-4 rounded-lg border-2 transition-all duration-200 ${
+                    emergencyData.location === 'custom'
+                      ? 'border-red-500 bg-red-50 text-red-700'
+                      : 'border-gray-200 bg-white hover:border-gray-300 text-gray-700'
+                  }`}
+                >
+                  <MapPin className="w-5 h-5" />
+                  <div className="text-left">
+                    <div className="font-medium">Enter Custom Address</div>
+                    <div className="text-sm opacity-70">Manually specify emergency location</div>
+                  </div>
+                </button>
+              </div>
             </div>
 
-            {emergencyData.location === 'custom' && (
-              <div>
-                <Label htmlFor="customAddress">Custom Address</Label>
-                <Input
-                  id="customAddress"
-                  value={emergencyData.customAddress}
-                  onChange={(e) => setEmergencyData(prev => ({ ...prev, customAddress: e.target.value }))}
-                  placeholder="Enter emergency location address"
-                />
+            <div className={`overflow-hidden transition-all duration-300 ease-out ${
+              emergencyData.location === 'custom' ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0'
+            }`}>
+              <div className="pt-4">
+                <Label htmlFor="customAddress" className="mb-3 block">Custom Address</Label>
+                <div className="relative">
+                  <Input
+                    id="customAddress"
+                    value={emergencyData.customAddress}
+                    onChange={(e) => setEmergencyData(prev => ({ ...prev, customAddress: e.target.value }))}
+                    placeholder="Enter emergency location address"
+                    className="pr-20"
+                  />
+                  {emergencyData.customAddress.trim() && !addressConfirmed && (
+                    <>
+                                              <button
+                          onClick={() => {
+                            setAddressConfirmed(true);
+                            toast({
+                              title: "Address confirmed",
+                              description: "Custom address has been set",
+                              variant: "success",
+                            });
+                          }}
+                        className="absolute right-10 top-1/2 transform -translate-y-1/2 p-1 rounded-full bg-green-500 text-white hover:bg-green-600 transition-all duration-200 active:scale-95"
+                        title="Confirm address"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 12l4 4L18 8" />
+                        </svg>
+                      </button>
+                                              <button
+                          onClick={() => {
+                            setEmergencyData(prev => ({ ...prev, customAddress: '' }));
+                            setAddressConfirmed(false);
+                          }}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 rounded-full bg-red-500 text-white hover:bg-red-600 transition-colors"
+                        title="Clear address"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </>
+                  )}
+                </div>
               </div>
-            )}
+            </div>
           </div>
         </Card>
 
         {/* Available Ambulances */}
-        <Card className="card-medmap mb-6">
+        <Card className="card-medmap mb-6" style={{
+          background: 'linear-gradient(135deg, hsl(var(--destructive) / 0.6) 0%, hsl(var(--destructive) / 0.4) 50%, hsl(var(--destructive) / 0.5) 100%)'
+        }}>
           <h3 className="font-semibold text-foreground mb-4">Nearby Ambulances</h3>
           
           <div className="space-y-3">
             {nearbyAmbulances.map((ambulance) => (
-              <div key={ambulance.id} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+              <div key={ambulance.id} className="flex items-center justify-between p-3 bg-white rounded-lg shadow-sm">
                 <div className="flex items-center">
                   <Ambulance className="w-5 h-5 text-destructive mr-3" />
                   <div>

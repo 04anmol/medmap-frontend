@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ThumbsUp, ThumbsDown } from 'lucide-react';
+import { ArrowLeft, ThumbsUp, ThumbsDown, ArrowRight } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 
 const HealthInfoScreen = () => {
@@ -202,11 +202,45 @@ const HealthInfoScreen = () => {
     setSelectedAnswer(answerIndex);
     setShowResult(true);
     
-    setTimeout(() => {
-      setSelectedAnswer(null);
-      setShowResult(false);
-      setCurrentQuestionIndex((prev) => (prev + 1) % quizQuestions.length);
-    }, 2000);
+    // Track correct answers
+    if (answerIndex === quizQuestions[currentQuestionIndex].correct) {
+      setCorrectAnswers(prev => prev + 1);
+    }
+  };
+
+  const handleNextQuestion = () => {
+    setSelectedAnswer(null);
+    setShowResult(false);
+    if (currentQuestionIndex === quizQuestions.length - 1) {
+      // Quiz completed
+      setShowFinalResult(true);
+    } else {
+      setCurrentQuestionIndex((prev) => prev + 1);
+    }
+  };
+
+  const handleRetryQuiz = () => {
+    setCurrentQuestionIndex(0);
+    setSelectedAnswer(null);
+    setShowResult(false);
+    setShowFinalResult(false);
+    setCorrectAnswers(0);
+  };
+
+  const getScoreEmoji = (score: number) => {
+    if (score >= 13) return "🎉"; // Excellent
+    if (score >= 10) return "😊"; // Good
+    if (score >= 7) return "😐"; // Average
+    if (score >= 4) return "😔"; // Below Average
+    return "😢"; // Poor
+  };
+
+  const getScoreMessage = (score: number) => {
+    if (score >= 13) return "Excellent! You have great medical knowledge. Keep up the amazing work!";
+    if (score >= 10) return "Good job! You have solid medical knowledge. Keep learning and improving!";
+    if (score >= 7) return "Not bad! You have basic medical knowledge. Consider reviewing health topics to improve.";
+    if (score >= 4) return "You need to improve your medical knowledge. Focus on learning basic health practices.";
+    return "You should focus on learning essential medical knowledge. Start with basic health habits.";
   };
 
   return (
@@ -254,175 +288,234 @@ const HealthInfoScreen = () => {
 
       {/* Content */}
       <div className="px-6">
-                 {currentSection === 'habits' ? (
-           <div className="space-y-4">
-                          {healthHabits.map((habit, index) => {
-                // Different color schemes for each card
-                const colorSchemes = [
-                  { bg: 'from-blue-600 to-blue-800', accent: 'blue-400' },
-                  { bg: 'from-purple-600 to-purple-800', accent: 'purple-400' },
-                  { bg: 'from-emerald-600 to-emerald-800', accent: 'emerald-400' },
-                  { bg: 'from-orange-600 to-orange-800', accent: 'orange-400' },
-                  { bg: 'from-pink-600 to-pink-800', accent: 'pink-400' },
-                  { bg: 'from-indigo-600 to-indigo-800', accent: 'indigo-400' },
-                  { bg: 'from-teal-600 to-teal-800', accent: 'teal-400' },
-                  { bg: 'from-rose-600 to-rose-800', accent: 'rose-400' },
-                  { bg: 'from-cyan-600 to-cyan-800', accent: 'cyan-400' },
-                  { bg: 'from-violet-600 to-violet-800', accent: 'violet-400' }
-                ];
-                
-                const scheme = colorSchemes[index % colorSchemes.length];
-                
-                // Different decorative element patterns
-                const decorativePatterns = [
-                  // Pattern 1: Circles
-                  () => (
-                    <>
-                      <div className={`absolute top-0 left-0 w-16 h-16 bg-${scheme.accent}/20 rounded-full -translate-x-4 -translate-y-4`}></div>
-                      <div className={`absolute bottom-0 right-0 w-12 h-12 bg-${scheme.accent}/20 rounded-full translate-x-3 translate-y-3`}></div>
-                    </>
-                  ),
-                  // Pattern 2: Squares
-                  () => (
-                    <>
-                      <div className={`absolute top-0 right-0 w-8 h-8 bg-${scheme.accent}/30 rotate-45 translate-x-2 -translate-y-2`}></div>
-                      <div className={`absolute bottom-0 left-0 w-6 h-6 bg-${scheme.accent}/30 rotate-45 -translate-x-2 translate-y-2`}></div>
-                    </>
-                  ),
-                  // Pattern 3: Triangles
-                  () => (
-                    <>
-                      <div className={`absolute top-0 right-0 w-0 h-0 border-l-[20px] border-l-transparent border-b-[20px] border-b-${scheme.accent}/30 translate-x-2 -translate-y-2`}></div>
-                      <div className={`absolute bottom-0 left-0 w-0 h-0 border-r-[16px] border-r-transparent border-t-[16px] border-t-${scheme.accent}/30 -translate-x-2 translate-y-2`}></div>
-                    </>
-                  ),
-                  // Pattern 4: Lines
-                  () => (
-                    <>
-                      <div className={`absolute top-0 left-0 w-20 h-1 bg-${scheme.accent}/40 rotate-45 -translate-x-8 -translate-y-2`}></div>
-                      <div className={`absolute bottom-0 right-0 w-16 h-1 bg-${scheme.accent}/40 -rotate-45 translate-x-6 translate-y-2`}></div>
-                    </>
-                  ),
-                  // Pattern 5: Dots
-                  () => (
-                    <>
-                      <div className={`absolute top-2 left-2 w-3 h-3 bg-${scheme.accent}/50 rounded-full`}></div>
-                      <div className={`absolute top-6 left-6 w-2 h-2 bg-${scheme.accent}/50 rounded-full`}></div>
-                      <div className={`absolute bottom-2 right-2 w-3 h-3 bg-${scheme.accent}/50 rounded-full`}></div>
-                      <div className={`absolute bottom-6 right-6 w-2 h-2 bg-${scheme.accent}/50 rounded-full`}></div>
-                    </>
-                  )
-                ];
-                
-                const pattern = decorativePatterns[index % decorativePatterns.length];
-                
-                return (
-                  <div 
-                    key={index}
-                    className={`relative p-6 rounded-2xl bg-gradient-to-br ${scheme.bg} shadow-lg overflow-hidden`}
-                  >
-                    {/* Decorative elements */}
-                    {pattern()}
-                    
-                    <div className="relative z-10">
-                      <div className="flex items-start gap-4 mb-4">
-                        <div className="text-4xl text-white/90">{habit.icon}</div>
-                        <div className="flex-1">
-                          <h3 className="font-bold text-white text-xl">{habit.title}</h3>
-                        </div>
+        {currentSection === 'habits' ? (
+          <div className="space-y-4">
+            {healthHabits.map((habit, index) => {
+              // Different color schemes for each card
+              const colorSchemes = [
+                { bg: 'from-blue-600 to-blue-800', accent: 'blue-400' },
+                { bg: 'from-purple-600 to-purple-800', accent: 'purple-400' },
+                { bg: 'from-emerald-600 to-emerald-800', accent: 'emerald-400' },
+                { bg: 'from-orange-600 to-orange-800', accent: 'orange-400' },
+                { bg: 'from-pink-600 to-pink-800', accent: 'pink-400' },
+                { bg: 'from-indigo-600 to-indigo-800', accent: 'indigo-400' },
+                { bg: 'from-teal-600 to-teal-800', accent: 'teal-400' },
+                { bg: 'from-rose-600 to-rose-800', accent: 'rose-400' },
+                { bg: 'from-cyan-600 to-cyan-800', accent: 'cyan-400' },
+                { bg: 'from-violet-600 to-violet-800', accent: 'violet-400' }
+              ];
+              
+              const scheme = colorSchemes[index % colorSchemes.length];
+              
+              // Different decorative element patterns
+              const decorativePatterns = [
+                // Pattern 1: Circles
+                () => (
+                  <>
+                    <div className={`absolute top-0 left-0 w-16 h-16 bg-${scheme.accent}/20 rounded-full -translate-x-4 -translate-y-4`}></div>
+                    <div className={`absolute bottom-0 right-0 w-12 h-12 bg-${scheme.accent}/20 rounded-full translate-x-3 translate-y-3`}></div>
+                  </>
+                ),
+                // Pattern 2: Squares
+                () => (
+                  <>
+                    <div className={`absolute top-0 right-0 w-8 h-8 bg-${scheme.accent}/30 rotate-45 translate-x-2 -translate-y-2`}></div>
+                    <div className={`absolute bottom-0 left-0 w-6 h-6 bg-${scheme.accent}/30 rotate-45 -translate-x-2 translate-y-2`}></div>
+                  </>
+                ),
+                // Pattern 3: Triangles
+                () => (
+                  <>
+                    <div className={`absolute top-0 right-0 w-0 h-0 border-l-[20px] border-l-transparent border-b-[20px] border-b-${scheme.accent}/30 translate-x-2 -translate-y-2`}></div>
+                    <div className={`absolute bottom-0 left-0 w-0 h-0 border-r-[16px] border-r-transparent border-t-[16px] border-t-${scheme.accent}/30 -translate-x-2 translate-y-2`}></div>
+                  </>
+                ),
+                // Pattern 4: Lines
+                () => (
+                  <>
+                    <div className={`absolute top-0 left-0 w-20 h-1 bg-${scheme.accent}/40 rotate-45 -translate-x-8 -translate-y-2`}></div>
+                    <div className={`absolute bottom-0 right-0 w-16 h-1 bg-${scheme.accent}/40 -rotate-45 translate-x-6 translate-y-2`}></div>
+                  </>
+                ),
+                // Pattern 5: Dots
+                () => (
+                  <>
+                    <div className={`absolute top-2 left-2 w-3 h-3 bg-${scheme.accent}/50 rounded-full`}></div>
+                    <div className={`absolute top-6 left-6 w-2 h-2 bg-${scheme.accent}/50 rounded-full`}></div>
+                    <div className={`absolute bottom-2 right-2 w-3 h-3 bg-${scheme.accent}/50 rounded-full`}></div>
+                    <div className={`absolute bottom-6 right-6 w-2 h-2 bg-${scheme.accent}/50 rounded-full`}></div>
+                  </>
+                )
+              ];
+              
+              const pattern = decorativePatterns[index % decorativePatterns.length];
+              
+              return (
+                <div 
+                  key={index}
+                  className={`relative p-6 rounded-2xl bg-gradient-to-br ${scheme.bg} shadow-lg overflow-hidden`}
+                >
+                  {/* Decorative elements */}
+                  {pattern()}
+                  
+                  <div className="relative z-10">
+                    <div className="flex items-start gap-4 mb-4">
+                      <div className="text-4xl text-white/90">{habit.icon}</div>
+                      <div className="flex-1">
+                        <h3 className="font-bold text-white text-xl">{habit.title}</h3>
                       </div>
-                      <div className="mb-4">
-                        <p className="text-white/80 leading-relaxed text-sm">{habit.description}</p>
-                      </div>
-                      <div className="flex justify-end">
-                        <div className="flex gap-2">
-                          <button
-                            onClick={() => handleLike(index)}
-                            className={`p-2 rounded-full transition-all duration-300 ${
-                              likedHabits.has(index)
-                                ? 'bg-green-500 text-white shadow-xl shadow-green-500/50 scale-125'
-                                : 'bg-white/10 text-white/60 hover:bg-white/20 hover:text-white/80'
-                            }`}
-                          >
-                            <ThumbsUp className="w-5 h-5" />
-                          </button>
-                          <button
-                            onClick={() => handleDislike(index)}
-                            className={`p-2 rounded-full transition-all duration-300 ${
-                              dislikedHabits.has(index)
-                                ? 'bg-red-500 text-white shadow-xl shadow-red-500/50 scale-125'
-                                : 'bg-white/10 text-white/60 hover:bg-white/20 hover:text-white/80'
-                            }`}
-                          >
-                            <ThumbsDown className="w-5 h-5" />
-                          </button>
-                        </div>
+                    </div>
+                    <div className="mb-4">
+                      <p className="text-white/80 leading-relaxed text-sm">{habit.description}</p>
+                    </div>
+                    <div className="flex justify-end">
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => handleLike(index)}
+                          className={`p-2 rounded-full transition-all duration-300 ${
+                            likedHabits.has(index)
+                              ? 'bg-green-500 text-white shadow-xl shadow-green-500/50 scale-125'
+                              : 'bg-white/10 text-white/60 hover:bg-white/20 hover:text-white/80'
+                          }`}
+                        >
+                          <ThumbsUp className="w-5 h-5" />
+                        </button>
+                        <button
+                          onClick={() => handleDislike(index)}
+                          className={`p-2 rounded-full transition-all duration-300 ${
+                            dislikedHabits.has(index)
+                              ? 'bg-red-500 text-white shadow-xl shadow-red-500/50 scale-125'
+                              : 'bg-white/10 text-white/60 hover:bg-white/20 hover:text-white/80'
+                          }`}
+                        >
+                          <ThumbsDown className="w-5 h-5" />
+                        </button>
                       </div>
                     </div>
                   </div>
-                );
-              })}
-           </div>
+                </div>
+              );
+            })}
+          </div>
         ) : (
           <div className="space-y-6">
             <div className="text-center mb-6">
-              <h3 className="text-xl font-semibold mb-3">Question {currentQuestionIndex + 1} of {quizQuestions.length}</h3>
+              <h3 className="text-xl font-semibold mb-3">Question {showFinalResult ? quizQuestions.length : currentQuestionIndex + 1} of {quizQuestions.length}</h3>
               <div className="w-full bg-gray-200 rounded-full h-3">
                 <div 
-                  className="bg-primary h-3 rounded-full transition-all duration-300"
-                  style={{ width: `${((currentQuestionIndex + 1) / quizQuestions.length) * 100}%` }}
+                  className={`h-3 rounded-full transition-all duration-300 ${
+                    showFinalResult ? 'bg-green-500' : 'bg-primary'
+                  }`}
+                  style={{ width: `${((showFinalResult ? quizQuestions.length : currentQuestionIndex + 1) / quizQuestions.length) * 100}%` }}
                 ></div>
               </div>
             </div>
 
-                         <div className="p-6 rounded-2xl bg-gradient-to-r from-green-50 to-emerald-50 border border-green-100 shadow-sm">
-               <h3 className="text-xl font-semibold mb-6 text-center">
-                 {quizQuestions[currentQuestionIndex].question}
-               </h3>
-
-              <div className="space-y-4">
-                {quizQuestions[currentQuestionIndex].options.map((option, index) => (
+            <div className={`p-6 rounded-2xl border shadow-sm ${
+              showFinalResult ? (
+                correctAnswers >= 13 ? 'bg-gradient-to-br from-green-400 to-emerald-600 border-green-300' :
+                correctAnswers >= 10 ? 'bg-gradient-to-br from-blue-400 to-indigo-600 border-blue-300' :
+                correctAnswers >= 7 ? 'bg-gradient-to-br from-yellow-400 to-orange-600 border-yellow-300' :
+                correctAnswers >= 4 ? 'bg-gradient-to-br from-orange-400 to-red-600 border-orange-300' :
+                'bg-gradient-to-br from-red-400 to-red-600 border-red-300'
+              ) : (
+                currentQuestionIndex % 5 === 0 ? 'bg-gradient-to-br from-green-400 to-emerald-600 border-green-300' :
+                currentQuestionIndex % 5 === 1 ? 'bg-gradient-to-br from-blue-400 to-indigo-600 border-blue-300' :
+                currentQuestionIndex % 5 === 2 ? 'bg-gradient-to-br from-purple-400 to-violet-600 border-purple-300' :
+                currentQuestionIndex % 5 === 3 ? 'bg-gradient-to-br from-orange-400 to-red-600 border-orange-300' :
+                'bg-gradient-to-br from-teal-400 to-cyan-600 border-teal-300'
+              )
+            }`}>
+              {showFinalResult ? (
+                <div className="text-center text-white">
+                  <div className="text-6xl mb-4">
+                    {getScoreEmoji(correctAnswers)}
+                  </div>
+                  <h2 className="text-2xl font-bold mb-3">
+                    Quiz Complete!
+                  </h2>
+                  <div className="text-lg mb-4">
+                    <span className="font-bold">{correctAnswers}</span> out of <span className="font-bold">{quizQuestions.length}</span> correct
+                  </div>
+                  <p className="text-sm mb-6 leading-relaxed opacity-90">
+                    {getScoreMessage(correctAnswers)}
+                  </p>
                   <button
-                    key={index}
-                    onClick={() => handleAnswerSelect(index)}
-                    disabled={showResult}
-                                         className={`w-full p-4 rounded-xl text-left transition-all duration-300 ${
-                       showResult && selectedAnswer === index
-                         ? index === quizQuestions[currentQuestionIndex].correct
-                           ? 'bg-green-500 text-white shadow-lg scale-105'
-                           : 'bg-red-500 text-white shadow-lg scale-105'
-                         : 'bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300 shadow-sm'
-                     }`}
+                    onClick={handleRetryQuiz}
+                    className="bg-white text-gray-800 font-medium py-3 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg mx-auto hover:bg-gray-100"
                   >
-                    <span className="font-medium">{String.fromCharCode(65 + index)}.</span> {option}
+                    Try Again
+                    <ArrowRight className="w-4 h-4" />
                   </button>
-                ))}
-              </div>
-
-              {showResult && (
-                <div className={`mt-6 p-4 rounded-xl ${
-                  selectedAnswer === quizQuestions[currentQuestionIndex].correct
-                    ? 'bg-green-100 border border-green-200'
-                    : 'bg-red-100 border border-red-200'
-                }`}>
-                  <p className={`font-medium text-lg ${
-                    selectedAnswer === quizQuestions[currentQuestionIndex].correct
-                      ? 'text-green-800'
-                      : 'text-red-800'
-                  }`}>
-                    {selectedAnswer === quizQuestions[currentQuestionIndex].correct
-                      ? '✅ Correct!'
-                      : '❌ Incorrect!'
-                    }
-                  </p>
-                  <p className="text-gray-700 mt-2">
-                    {quizQuestions[currentQuestionIndex].explanation}
-                  </p>
                 </div>
+              ) : (
+                <>
+                  <h3 className="text-xl font-semibold mb-6 text-center text-white">
+                    {quizQuestions[currentQuestionIndex].question}
+                  </h3>
+
+                  <div className="h-[240px] flex flex-col mb-12">
+                    <div className="flex-1 space-y-4">
+                      {!showResult ? (
+                        quizQuestions[currentQuestionIndex].options.map((option, index) => (
+                          <button
+                            key={index}
+                            onClick={() => handleAnswerSelect(index)}
+                            className="w-full p-4 rounded-xl text-left transition-all duration-300 bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300 shadow-sm"
+                          >
+                            <span className="font-medium">{String.fromCharCode(65 + index)}.</span> {option}
+                          </button>
+                        ))
+                      ) : (
+                        <div className={`p-4 rounded-xl h-full flex flex-col justify-center ${
+                          selectedAnswer === quizQuestions[currentQuestionIndex].correct
+                            ? 'bg-green-100 border border-green-200'
+                            : 'bg-red-100 border border-red-200'
+                        }`}>
+                          <div className="flex items-center gap-3 mb-3">
+                            <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                              selectedAnswer === quizQuestions[currentQuestionIndex].correct
+                                ? 'bg-green-500 text-white'
+                                : 'bg-red-500 text-white'
+                            }`}>
+                              <span className="text-xl font-bold">
+                                {selectedAnswer === quizQuestions[currentQuestionIndex].correct ? '✓' : '✗'}
+                              </span>
+                            </div>
+                            <p className={`font-medium text-lg ${
+                              selectedAnswer === quizQuestions[currentQuestionIndex].correct
+                                ? 'text-green-800'
+                                : 'text-red-800'
+                            }`}>
+                              {selectedAnswer === quizQuestions[currentQuestionIndex].correct
+                                ? 'Correct!'
+                                : 'Incorrect!'
+                              }
+                            </p>
+                          </div>
+                          <p className="text-gray-700">
+                            {quizQuestions[currentQuestionIndex].explanation}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    {showResult && (
+                      <button
+                        onClick={handleNextQuestion}
+                        className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg mt-6 border-2 border-white"
+                      >
+                        Next Question
+                        <ArrowRight className="w-5 h-5" />
+                      </button>
+                    )}
+                  </div>
+                </>
               )}
             </div>
           </div>
         )}
+
       </div>
 
       {/* Navigation */}

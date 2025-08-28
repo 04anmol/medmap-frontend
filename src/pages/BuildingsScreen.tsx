@@ -255,7 +255,7 @@ const BuildingsScreen = () => {
     switch (type) {
       case 'hospital':
         return {
-          gradient: 'bg-gradient-to-r from-violet-50 to-violet-100',
+          gradient: 'bg-gradient-to-br from-violet-200 via-violet-100 to-violet-50',
           borderClass: 'border-violet-700',
           borderColor: '#5b21b6',
           dividerClass: 'border-violet-700/30',
@@ -264,7 +264,7 @@ const BuildingsScreen = () => {
         };
       case 'blood':
         return {
-          gradient: 'bg-gradient-to-r from-rose-50 to-rose-100',
+          gradient: 'bg-gradient-to-br from-rose-200 via-rose-100 to-rose-50',
           borderClass: 'border-rose-600',
           borderColor: '#e11d48',
           dividerClass: 'border-rose-600/30',
@@ -273,7 +273,7 @@ const BuildingsScreen = () => {
         };
       case 'oxygen':
         return {
-          gradient: 'bg-gradient-to-r from-cyan-50 to-cyan-100',
+          gradient: 'bg-gradient-to-br from-cyan-200 via-cyan-100 to-cyan-50',
           borderClass: 'border-cyan-600',
           borderColor: '#0891b2',
           dividerClass: 'border-cyan-600/30',
@@ -282,7 +282,7 @@ const BuildingsScreen = () => {
         };
       default:
         return {
-          gradient: 'bg-medmap-lavender',
+          gradient: 'bg-gradient-to-br from-purple-200 via-purple-100 to-purple-50',
           borderClass: 'border-medmap-purple',
           borderColor: '#6b3fa0',
           dividerClass: 'border-medmap-purple/30',

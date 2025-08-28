@@ -56,7 +56,9 @@ const Navigation = () => {
               className={`w-6 h-6 transition-all duration-300 ease-out align-middle block -translate-x-[2px] ${
                 item.active 
                   ? 'text-white' 
-                  : 'text-neutral-400 hover:text-neutral-200'
+                  : item.label === 'SOS'
+                    ? 'text-red-400 animate-pulse'
+                    : 'text-neutral-400 hover:text-neutral-200'
               }`} 
             />
           </button>

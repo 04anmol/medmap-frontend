@@ -397,7 +397,7 @@ All colors MUST be HSL.
     --muted-foreground: 240 15% 60%; /* Medium Gray: #7F8C8D */
 
     /* Accent - Bright Green for highlights */
-    --accent: 120 100% 70%; /* Bright Green for active states */
+    --accent: 220 25% 85%; /* Light Gray for active states */
     --accent-foreground: 220 25% 15%; /* Dark Gray: #2C3E50 */
 
     /* Emergency Red */
@@ -515,7 +515,7 @@ All colors MUST be HSL.
   }
   
   .btn-emergency {
-    background: hsl(var(--destructive));
+    background: linear-gradient(135deg, hsl(var(--destructive)) 0%, hsl(var(--medmap-red)) 50%, hsl(var(--destructive)) 100%);
     @apply text-destructive-foreground font-medium rounded-2xl px-8 py-4;
     box-shadow: var(--shadow-emergency);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -526,16 +526,16 @@ All colors MUST be HSL.
     box-shadow: 0 12px 40px hsl(var(--medmap-red) / 0.4);
   }
   
-  /* Card Styles - Updated to use solid colors */
+  /* Card Styles - Updated to use gradient colors */
   .card-medmap {
-    background: hsl(var(--card));
+    background: linear-gradient(135deg, hsl(var(--card) / 0.95) 0%, hsl(var(--muted) / 0.9) 50%, hsl(var(--card) / 0.95) 100%);
     @apply rounded-3xl p-6 border-0 text-medmap-dark;
     box-shadow: var(--shadow-card);
     backdrop-filter: blur(20px);
   }
   
   .card-medmap-location {
-    background: hsl(var(--primary)) !important;
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.8) 50%, hsl(var(--primary)) 100%) !important;
     color: hsl(var(--primary-foreground)) !important;
     @apply rounded-3xl p-6 border-0;
     box-shadow: var(--shadow-card);
@@ -543,7 +543,28 @@ All colors MUST be HSL.
   }
   
   .card-emergency {
-    @apply bg-destructive/10 border-destructive/30;
+    background: linear-gradient(135deg, hsl(var(--destructive) / 0.15) 0%, hsl(var(--destructive) / 0.05) 50%, hsl(var(--destructive) / 0.15) 100%);
+    @apply border-destructive/30;
+  }
+
+  /* Custom Switch Styling */
+  .switch-purple[data-state="unchecked"] {
+    background-color: transparent !important;
+    border-color: hsl(var(--medmap-purple)) !important;
+    border-width: 2px !important;
+  }
+  
+  .switch-purple[data-state="unchecked"] [data-radix-switch-thumb] {
+    background-color: hsl(var(--medmap-purple)) !important;
+  }
+  
+  .switch-purple[data-state="checked"] [data-radix-switch-thumb] {
+    background-color: white !important;
+  }
+  
+  .switch-purple[data-state="checked"] {
+    background-color: hsl(var(--medmap-purple)) !important;
+    border-color: hsl(var(--medmap-purple)) !important;
   }
   
   /* Icon Component Styles - Colorful Variations */
