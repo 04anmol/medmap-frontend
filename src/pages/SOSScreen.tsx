@@ -242,14 +242,16 @@ const SOSScreen = () => {
   return (
     <div className="min-h-screen bg-gradient-surface pb-24">
       {/* Emergency Header */}
-      <div className="p-6 bg-destructive/5 border-b border-destructive/10">
-        <h1 className="text-2xl font-bold text-destructive mb-2">Emergency SOS</h1>
-        <p className="text-medmap-gray">Request immediate medical assistance</p>
+      <div className="p-6 pb-4 pt-12">
+        <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-t-lg border-4 border-red-500 p-6 shadow-sm">
+          <h1 className="text-2xl font-bold text-red-600 mb-2">Emergency SOS</h1>
+          <p className="text-red-700 text-sm">Request immediate medical assistance</p>
+        </div>
       </div>
 
       {/* Location Selection */}
-      <div className="p-6">
-        <Card className="card-medmap mb-6">
+      <div className="px-6 pt-0">
+        <Card className="card-medmap mb-6 rounded-t-none">
           <h3 className="font-semibold text-foreground mb-4">Emergency Location</h3>
           
           <div className="space-y-4">

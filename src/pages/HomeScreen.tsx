@@ -39,7 +39,7 @@ const HomeScreen = () => {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-background pb-24">
+    <div className="min-h-screen bg-background pb-24">
       {/* Header */}
       <div className="flex items-center justify-between p-6">
         {/* Logo and User Initial */}
@@ -673,7 +673,7 @@ const HomeScreen = () => {
         <QuickAccessCards />
       </div>
 
-            </div>
+    </div>
     </PageTransition>
   );
 };

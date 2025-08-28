@@ -295,33 +295,51 @@ const BuildingsScreen = () => {
   return (
     <div className="min-h-screen bg-background pb-24">
       {/* Header */}
-      <div className="p-6">
-        <h1 className="text-2xl font-bold text-primary mb-2">
-          Medical Facilities
-        </h1>
-        <p className="text-muted-foreground">
-          Find nearby hospitals, blood banks, and oxygen suppliers
-        </p>
+      <div className="p-6 pt-12">
+        <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-t-lg border-4 border-blue-500 p-6 shadow-sm">
+          <h1 className="text-2xl font-bold text-blue-600 mb-2">
+            Medical Facilities
+          </h1>
+          <p className="text-blue-700 text-sm">
+            Find and access nearby hospitals, blood banks, and oxygen suppliers for immediate medical assistance
+          </p>
+        </div>
       </div>
 
       {/* Category Filter */}
       <div className="px-6 mb-6 flex justify-center">
         <div className="inline-flex bg-neutral-900 text-neutral-200 rounded-2xl p-3 shadow-lg border border-neutral-800 overflow-hidden">
           <div className="flex flex-wrap gap-3 md:flex-nowrap md:gap-3 md:overflow-x-auto md:whitespace-nowrap no-scrollbar">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
-                className={`md:shrink-0 flex items-center justify-center px-5 py-3 rounded-full text-sm font-medium transition-all duration-200 ${
-                  selectedCategory === category.id 
-                    ? 'bg-medmap-purple text-white shadow-md' 
-                    : 'text-neutral-400 hover:text-neutral-200'
-                }`}
-              >
-                <category.icon className={`w-5 h-5 ${selectedCategory === category.id ? 'mr-2' : 'mr-2'}`} />
-                {selectedCategory === category.id && category.label}
-              </button>
-            ))}
+            {categories.map((category) => {
+              const getActiveColor = (categoryId: string) => {
+                switch (categoryId) {
+                  case 'all':
+                    return 'bg-blue-500'; // Blue for building/all
+                  case 'hospital':
+                    return 'bg-red-500'; // Red for heart/hospital
+                  case 'blood':
+                    return 'bg-pink-500'; // Pink for blood drop
+                  case 'oxygen':
+                    return 'bg-cyan-500'; // Cyan for wind/oxygen
+                  default:
+                    return 'bg-medmap-purple';
+                }
+              };
+              
+              return (
+                <button
+                  key={category.id}
+                  onClick={() => setSelectedCategory(category.id)}
+                  className={`md:shrink-0 flex items-center justify-center px-5 py-3 rounded-full text-sm font-medium transition-all duration-200 ${
+                    selectedCategory === category.id 
+                      ? `${getActiveColor(category.id)} text-white shadow-md` 
+                      : 'text-neutral-400 hover:text-neutral-200'
+                  }`}
+                >
+                  <category.icon className="w-5 h-5" />
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>

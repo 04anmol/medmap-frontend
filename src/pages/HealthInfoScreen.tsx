@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ThumbsUp, ThumbsDown } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 
 const HealthInfoScreen = () => {
@@ -11,6 +11,8 @@ const HealthInfoScreen = () => {
   const [showResult, setShowResult] = useState(false);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [showFinalResult, setShowFinalResult] = useState(false);
+  const [likedHabits, setLikedHabits] = useState<Set<number>>(new Set());
+  const [dislikedHabits, setDislikedHabits] = useState<Set<number>>(new Set());
 
   // Health habits and practices data
   const healthHabits = [
@@ -160,6 +162,42 @@ const HealthInfoScreen = () => {
     }
   ];
 
+  const handleLike = (habitIndex: number) => {
+    setLikedHabits(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(habitIndex)) {
+        newSet.delete(habitIndex);
+      } else {
+        newSet.add(habitIndex);
+        // Remove from disliked if it was there
+        setDislikedHabits(prevDisliked => {
+          const newDislikedSet = new Set(prevDisliked);
+          newDislikedSet.delete(habitIndex);
+          return newDislikedSet;
+        });
+      }
+      return newSet;
+    });
+  };
+
+  const handleDislike = (habitIndex: number) => {
+    setDislikedHabits(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(habitIndex)) {
+        newSet.delete(habitIndex);
+      } else {
+        newSet.add(habitIndex);
+        // Remove from liked if it was there
+        setLikedHabits(prevLiked => {
+          const newLikedSet = new Set(prevLiked);
+          newLikedSet.delete(habitIndex);
+          return newLikedSet;
+        });
+      }
+      return newSet;
+    });
+  };
+
   const handleAnswerSelect = (answerIndex: number) => {
     setSelectedAnswer(answerIndex);
     setShowResult(true);
@@ -173,64 +211,158 @@ const HealthInfoScreen = () => {
 
   return (
     <div className="min-h-screen bg-background pb-24">
-      {/* Header */}
-      <div className="flex items-center justify-between p-6">
-        <button
-          onClick={() => navigate('/home')}
-          className="flex items-center space-x-2 text-foreground hover:text-primary transition-colors"
-        >
-          <ArrowLeft className="w-5 h-5" />
-          <span>Back to Home</span>
-        </button>
-        <h1 className="text-xl font-bold text-foreground">Health Information Center</h1>
-        <div className="w-20"></div> {/* Spacer for centering */}
-      </div>
-
-      {/* Section Tabs */}
-      <div className="px-6 mb-6">
-        <div className="flex gap-2 bg-gray-100 p-1 rounded-2xl max-w-md mx-auto">
-          <button
-            onClick={() => setCurrentSection('habits')}
-            className={`flex-1 px-4 py-3 rounded-xl transition-all font-medium ${
-              currentSection === 'habits' 
-                ? 'bg-white text-primary shadow-sm' 
-                : 'text-gray-600 hover:text-gray-800'
-            }`}
-          >
-            Daily Health Habits
-          </button>
-          <button
-            onClick={() => setCurrentSection('quiz')}
-            className={`flex-1 px-4 py-3 rounded-xl transition-all font-medium ${
-              currentSection === 'quiz' 
-                ? 'bg-white text-primary shadow-sm' 
-                : 'text-gray-600 hover:text-gray-800'
-            }`}
-          >
-            Medical Quiz
-          </button>
+                           {/* Header */}
+        <div className="flex items-center justify-between p-6">
+          <div className="flex-1"></div> {/* Spacer for centering */}
         </div>
-      </div>
+
+                                                               {/* Section Title */}
+          <div className="px-6 mb-3 mt-1">
+            <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-t-lg border-4 border-purple-500 p-6 shadow-sm">
+              <h2 className="text-2xl font-bold text-purple-600 mb-2">Health Information Center</h2>
+                            <p className="text-purple-700 text-sm leading-relaxed">
+                 Access health habits and medical quizzes to improve your well-being.
+               </p>
+            </div>
+          </div>
+
+                           {/* Section Tabs */}
+        <div className="px-6 mb-6 mt-8">
+          <div className="flex gap-2 bg-neutral-900 p-2 rounded-2xl max-w-sm mx-auto shadow-lg border border-neutral-800">
+            <button
+              onClick={() => setCurrentSection('habits')}
+              className={`flex-1 px-3 py-2 rounded-xl transition-all font-medium text-sm ${
+                currentSection === 'habits' 
+                  ? 'bg-purple-500 text-white shadow-md' 
+                  : 'text-neutral-400 hover:text-neutral-200'
+              }`}
+            >
+              Daily Health Habits
+            </button>
+            <button
+              onClick={() => setCurrentSection('quiz')}
+              className={`flex-1 px-3 py-2 rounded-xl transition-all font-medium text-sm ${
+                currentSection === 'quiz' 
+                  ? 'bg-purple-500 text-white shadow-md' 
+                  : 'text-neutral-400 hover:text-neutral-200'
+              }`}
+            >
+              Medical Quiz
+            </button>
+          </div>
+        </div>
 
       {/* Content */}
       <div className="px-6">
-        {currentSection === 'habits' ? (
-          <div className="space-y-4">
-            {healthHabits.map((habit, index) => (
-              <div 
-                key={index}
-                className="p-6 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 shadow-sm"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="text-3xl">{habit.icon}</div>
-                  <div>
-                    <h3 className="font-semibold text-foreground mb-2 text-lg">{habit.title}</h3>
-                    <p className="text-gray-600 leading-relaxed">{habit.description}</p>
+                 {currentSection === 'habits' ? (
+           <div className="space-y-4">
+                          {healthHabits.map((habit, index) => {
+                // Different color schemes for each card
+                const colorSchemes = [
+                  { bg: 'from-blue-600 to-blue-800', accent: 'blue-400' },
+                  { bg: 'from-purple-600 to-purple-800', accent: 'purple-400' },
+                  { bg: 'from-emerald-600 to-emerald-800', accent: 'emerald-400' },
+                  { bg: 'from-orange-600 to-orange-800', accent: 'orange-400' },
+                  { bg: 'from-pink-600 to-pink-800', accent: 'pink-400' },
+                  { bg: 'from-indigo-600 to-indigo-800', accent: 'indigo-400' },
+                  { bg: 'from-teal-600 to-teal-800', accent: 'teal-400' },
+                  { bg: 'from-rose-600 to-rose-800', accent: 'rose-400' },
+                  { bg: 'from-cyan-600 to-cyan-800', accent: 'cyan-400' },
+                  { bg: 'from-violet-600 to-violet-800', accent: 'violet-400' }
+                ];
+                
+                const scheme = colorSchemes[index % colorSchemes.length];
+                
+                // Different decorative element patterns
+                const decorativePatterns = [
+                  // Pattern 1: Circles
+                  () => (
+                    <>
+                      <div className={`absolute top-0 left-0 w-16 h-16 bg-${scheme.accent}/20 rounded-full -translate-x-4 -translate-y-4`}></div>
+                      <div className={`absolute bottom-0 right-0 w-12 h-12 bg-${scheme.accent}/20 rounded-full translate-x-3 translate-y-3`}></div>
+                    </>
+                  ),
+                  // Pattern 2: Squares
+                  () => (
+                    <>
+                      <div className={`absolute top-0 right-0 w-8 h-8 bg-${scheme.accent}/30 rotate-45 translate-x-2 -translate-y-2`}></div>
+                      <div className={`absolute bottom-0 left-0 w-6 h-6 bg-${scheme.accent}/30 rotate-45 -translate-x-2 translate-y-2`}></div>
+                    </>
+                  ),
+                  // Pattern 3: Triangles
+                  () => (
+                    <>
+                      <div className={`absolute top-0 right-0 w-0 h-0 border-l-[20px] border-l-transparent border-b-[20px] border-b-${scheme.accent}/30 translate-x-2 -translate-y-2`}></div>
+                      <div className={`absolute bottom-0 left-0 w-0 h-0 border-r-[16px] border-r-transparent border-t-[16px] border-t-${scheme.accent}/30 -translate-x-2 translate-y-2`}></div>
+                    </>
+                  ),
+                  // Pattern 4: Lines
+                  () => (
+                    <>
+                      <div className={`absolute top-0 left-0 w-20 h-1 bg-${scheme.accent}/40 rotate-45 -translate-x-8 -translate-y-2`}></div>
+                      <div className={`absolute bottom-0 right-0 w-16 h-1 bg-${scheme.accent}/40 -rotate-45 translate-x-6 translate-y-2`}></div>
+                    </>
+                  ),
+                  // Pattern 5: Dots
+                  () => (
+                    <>
+                      <div className={`absolute top-2 left-2 w-3 h-3 bg-${scheme.accent}/50 rounded-full`}></div>
+                      <div className={`absolute top-6 left-6 w-2 h-2 bg-${scheme.accent}/50 rounded-full`}></div>
+                      <div className={`absolute bottom-2 right-2 w-3 h-3 bg-${scheme.accent}/50 rounded-full`}></div>
+                      <div className={`absolute bottom-6 right-6 w-2 h-2 bg-${scheme.accent}/50 rounded-full`}></div>
+                    </>
+                  )
+                ];
+                
+                const pattern = decorativePatterns[index % decorativePatterns.length];
+                
+                return (
+                  <div 
+                    key={index}
+                    className={`relative p-6 rounded-2xl bg-gradient-to-br ${scheme.bg} shadow-lg overflow-hidden`}
+                  >
+                    {/* Decorative elements */}
+                    {pattern()}
+                    
+                    <div className="relative z-10">
+                      <div className="flex items-start gap-4 mb-4">
+                        <div className="text-4xl text-white/90">{habit.icon}</div>
+                        <div className="flex-1">
+                          <h3 className="font-bold text-white text-xl">{habit.title}</h3>
+                        </div>
+                      </div>
+                      <div className="mb-4">
+                        <p className="text-white/80 leading-relaxed text-sm">{habit.description}</p>
+                      </div>
+                      <div className="flex justify-end">
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => handleLike(index)}
+                            className={`p-2 rounded-full transition-all duration-300 ${
+                              likedHabits.has(index)
+                                ? 'bg-green-500 text-white shadow-xl shadow-green-500/50 scale-125'
+                                : 'bg-white/10 text-white/60 hover:bg-white/20 hover:text-white/80'
+                            }`}
+                          >
+                            <ThumbsUp className="w-5 h-5" />
+                          </button>
+                          <button
+                            onClick={() => handleDislike(index)}
+                            className={`p-2 rounded-full transition-all duration-300 ${
+                              dislikedHabits.has(index)
+                                ? 'bg-red-500 text-white shadow-xl shadow-red-500/50 scale-125'
+                                : 'bg-white/10 text-white/60 hover:bg-white/20 hover:text-white/80'
+                            }`}
+                          >
+                            <ThumbsDown className="w-5 h-5" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            ))}
-          </div>
+                );
+              })}
+           </div>
         ) : (
           <div className="space-y-6">
             <div className="text-center mb-6">
@@ -243,10 +375,10 @@ const HealthInfoScreen = () => {
               </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-gradient-to-r from-green-50 to-emerald-50 border border-green-100 shadow-sm">
-              <h3 className="text-xl font-semibold mb-6 text-center">
-                {quizQuestions[currentQuestionIndex].question}
-              </h3>
+                         <div className="p-6 rounded-2xl bg-gradient-to-r from-green-50 to-emerald-50 border border-green-100 shadow-sm">
+               <h3 className="text-xl font-semibold mb-6 text-center">
+                 {quizQuestions[currentQuestionIndex].question}
+               </h3>
 
               <div className="space-y-4">
                 {quizQuestions[currentQuestionIndex].options.map((option, index) => (
@@ -254,13 +386,13 @@ const HealthInfoScreen = () => {
                     key={index}
                     onClick={() => handleAnswerSelect(index)}
                     disabled={showResult}
-                    className={`w-full p-4 rounded-xl text-left transition-all duration-300 ${
-                      showResult && selectedAnswer === index
-                        ? index === quizQuestions[currentQuestionIndex].correct
-                          ? 'bg-green-500 text-white shadow-lg scale-105'
-                          : 'bg-red-500 text-white shadow-lg scale-105'
-                        : 'bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300 shadow-sm'
-                    }`}
+                                         className={`w-full p-4 rounded-xl text-left transition-all duration-300 ${
+                       showResult && selectedAnswer === index
+                         ? index === quizQuestions[currentQuestionIndex].correct
+                           ? 'bg-green-500 text-white shadow-lg scale-105'
+                           : 'bg-red-500 text-white shadow-lg scale-105'
+                         : 'bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300 shadow-sm'
+                     }`}
                   >
                     <span className="font-medium">{String.fromCharCode(65 + index)}.</span> {option}
                   </button>

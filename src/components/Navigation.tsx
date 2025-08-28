@@ -36,11 +36,11 @@ const Navigation = () => {
   const activeIndex = navItems.findIndex(item => item.active);
 
   return (
-    <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-nav-bg rounded-full p-3 shadow-nav">
+    <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-neutral-900 rounded-full p-3 shadow-lg border border-neutral-800 z-50">
       <div className="relative flex items-center">
         {/* Dynamic bubble highlight */}
         <div 
-          className="absolute top-0 h-14 w-14 bg-accent rounded-full transition-all duration-400 ease-out shadow-lg"
+          className="absolute top-0 h-14 w-14 bg-purple-500 rounded-full transition-all duration-400 ease-out shadow-lg"
           style={{
             transform: `translateX(${activeIndex * 64 + 2}px)`,
           }}
@@ -55,8 +55,8 @@ const Navigation = () => {
             <item.icon 
               className={`w-6 h-6 transition-all duration-300 ease-out align-middle block -translate-x-[2px] ${
                 item.active 
-                  ? 'text-accent-foreground' 
-                  : `text-nav-inactive hover:text-nav-hover ${item.label === 'SOS' ? 'glow-sos' : ''}`
+                  ? 'text-white' 
+                  : 'text-neutral-400 hover:text-neutral-200'
               }`} 
             />
           </button>
