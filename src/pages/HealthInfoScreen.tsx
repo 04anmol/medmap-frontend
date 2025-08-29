@@ -442,7 +442,7 @@ const HealthInfoScreen = () => {
                   </p>
                   <button
                     onClick={handleRetryQuiz}
-                    className="bg-white text-gray-800 font-medium py-3 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg mx-auto hover:bg-gray-100"
+                    className="bg-white text-gray-800 font-medium py-3 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg mx-auto hover:bg-gray-100 border-2 border-purple-300 hover:border-purple-500"
                   >
                     Try Again
                     <ArrowRight className="w-4 h-4" />
@@ -461,16 +461,16 @@ const HealthInfoScreen = () => {
                           <button
                             key={index}
                             onClick={() => handleAnswerSelect(index)}
-                            className="w-full p-4 rounded-xl text-left transition-all duration-300 bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300 shadow-sm"
+                            className="w-full p-4 rounded-xl text-left transition-all duration-300 bg-white hover:bg-gray-50 border-2 border-purple-300 hover:border-purple-500 shadow-sm"
                           >
                             <span className="font-medium">{String.fromCharCode(65 + index)}.</span> {option}
                           </button>
                         ))
                       ) : (
-                        <div className={`p-4 rounded-xl h-full flex flex-col justify-center ${
+                        <div className={`p-4 rounded-xl h-full flex flex-col justify-center border-2 ${
                           selectedAnswer === quizQuestions[currentQuestionIndex].correct
-                            ? 'bg-green-100 border border-green-200'
-                            : 'bg-red-100 border border-red-200'
+                            ? 'bg-green-100 border-green-300'
+                            : 'bg-red-100 border-red-300'
                         }`}>
                           <div className="flex items-center gap-3 mb-3">
                             <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
@@ -503,7 +503,7 @@ const HealthInfoScreen = () => {
                     {showResult && (
                       <button
                         onClick={handleNextQuestion}
-                        className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg mt-6 border-2 border-white"
+                        className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg mt-6 border-2 border-purple-300 hover:border-purple-500"
                       >
                         Next Question
                         <ArrowRight className="w-5 h-5" />

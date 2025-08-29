@@ -61,7 +61,7 @@ const SignUpScreen = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-surface flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between p-6">
         <Button 
@@ -89,22 +89,24 @@ const SignUpScreen = () => {
           </div>
 
           {/* Sign Up Form */}
-          <Card className="card-medmap animate-fade-in-delayed">
+          <Card className="card-medmap animate-fade-in-delayed" style={{
+            background: '#5B21B6'
+          }}>
             <form onSubmit={handleSignUp} className="space-y-6">
               {/* First Name */}
               <div className="space-y-2">
-                <Label htmlFor="firstName" className="text-foreground font-medium">
+                <Label htmlFor="firstName" className="text-white font-medium mb-3 block">
                   First Name
                 </Label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-medmap-gray" />
+                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white" />
                   <Input
                     id="firstName"
                     name="firstName"
                     type="text"
                     value={formData.firstName}
                     onChange={handleInputChange}
-                    className="pl-10 bg-muted/50 border-border/50 focus:border-primary"
+                    className="pl-10 bg-white/20 text-white placeholder:text-white/70 border-white/30 focus:border-white/50"
                     placeholder="Enter your first name"
                   />
                 </div>
@@ -112,18 +114,18 @@ const SignUpScreen = () => {
 
               {/* Last Name */}
               <div className="space-y-2">
-                <Label htmlFor="lastName" className="text-foreground font-medium">
+                <Label htmlFor="lastName" className="text-white font-medium mb-3 block">
                   Last Name
                 </Label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-medmap-gray" />
+                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white" />
                   <Input
                     id="lastName"
                     name="lastName"
                     type="text"
                     value={formData.lastName}
                     onChange={handleInputChange}
-                    className="pl-10 bg-muted/50 border-border/50 focus:border-primary"
+                    className="pl-10 bg-white/20 text-white placeholder:text-white/70 border-white/30 focus:border-white/50"
                     placeholder="Enter your last name"
                   />
                 </div>
@@ -131,18 +133,18 @@ const SignUpScreen = () => {
 
               {/* Email */}
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-foreground font-medium">
+                <Label htmlFor="email" className="text-white font-medium mb-3 block">
                   Email Address
                 </Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-medmap-gray" />
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white" />
                   <Input
                     id="email"
                     name="email"
                     type="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="pl-10 bg-muted/50 border-border/50 focus:border-primary"
+                    className="pl-10 bg-white/20 text-white placeholder:text-white/70 border-white/30 focus:border-white/50"
                     placeholder="Enter your email"
                   />
                 </div>
@@ -150,35 +152,37 @@ const SignUpScreen = () => {
 
               {/* Password */}
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-foreground font-medium">
+                <Label htmlFor="password" className="text-white font-medium mb-3 block">
                   Password
                 </Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-medmap-gray" />
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white" />
                   <Input
                     id="password"
                     name="password"
                     type="password"
                     value={formData.password}
                     onChange={handleInputChange}
-                    className="pl-10 bg-muted/50 border-border/50 focus:border-primary"
+                    className="pl-10 bg-white/20 text-white placeholder:text-white/70 border-white/30 focus:border-white/50"
                     placeholder="Create a password"
                   />
                 </div>
               </div>
 
-              {/* Sign Up Button */}
-              <Button 
-                type="submit" 
-                className="w-full btn-medmap mt-8"
-              >
-                Continue to Profile Setup
-              </Button>
             </form>
+
+            {/* Sign Up Button */}
+            <Button 
+              type="submit" 
+              className="w-full bg-white text-purple-600 border-2 border-purple-600 hover:bg-purple-50 font-semibold py-3 px-6 rounded-xl transition-all duration-300 mt-8"
+              onClick={handleSignUp}
+            >
+              Continue to Profile Setup
+            </Button>
           </Card>
 
           {/* Footer Text */}
-          <p className="text-center text-xs text-medmap-gray mt-6">
+          <p className="text-center text-xs text-gray-600 mt-6">
             By continuing, you agree to our Terms of Service and Privacy Policy
           </p>
         </div>

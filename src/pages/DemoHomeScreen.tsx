@@ -164,9 +164,10 @@ const DemoHomeScreen = () => {
             <div className="flex flex-col gap-6">
               {/* Captain with Ambulance Icon */}
               <div 
-                className="bg-red-500 rounded-full px-8 py-4 cursor-pointer transition-all hover:scale-105 flex items-center justify-center w-full"
+                className="bg-red-500 rounded-full px-8 py-4 cursor-pointer transition-all hover:scale-105 flex items-center justify-center w-full relative overflow-hidden"
                 onClick={() => handleUserTypeSelect('ambulance')}
               >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shine-left-to-right"></div>
                 <div className="flex items-center space-x-4">
                   <Ambulance className="w-8 h-8 text-white" />
                   <span className="text-white font-semibold text-xl">Captain</span>
@@ -175,9 +176,10 @@ const DemoHomeScreen = () => {
               
               {/* User with User Icon */}
               <div 
-                className="bg-blue-500 rounded-full px-8 py-4 cursor-pointer transition-all hover:scale-105 flex items-center justify-center w-full"
+                className="bg-blue-500 rounded-full px-8 py-4 cursor-pointer transition-all hover:scale-105 flex items-center justify-center w-full relative overflow-hidden"
                 onClick={() => handleUserTypeSelect('user')}
               >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shine-right-to-left"></div>
                 <div className="flex items-center space-x-4">
                   <span className="text-white font-semibold text-xl">User</span>
                   <User className="w-8 h-8 text-white" />

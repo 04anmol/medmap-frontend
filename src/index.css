@@ -203,6 +203,24 @@ input, textarea, select {
   }
 }
 
+@keyframes shineLeftToRight {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes shineRightToLeft {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 @keyframes floatSmooth {
   0%, 100% {
     transform: translateY(0);
@@ -605,6 +623,14 @@ All colors MUST be HSL.
   
   .animate-pulse-gentle {
     animation: pulseGentle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .animate-shine-left-to-right {
+    animation: shineLeftToRight 2s ease-in-out infinite;
+  }
+
+  .animate-shine-right-to-left {
+    animation: shineRightToLeft 2s ease-in-out infinite;
   }
 }
 
