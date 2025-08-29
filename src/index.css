@@ -568,12 +568,12 @@ All colors MUST be HSL.
   /* Custom Switch Styling */
   .switch-purple[data-state="unchecked"] {
     background-color: transparent !important;
-    border-color: hsl(var(--medmap-purple)) !important;
+    border-color: hsl(var(--destructive)) !important;
     border-width: 2px !important;
   }
   
   .switch-purple[data-state="unchecked"] [data-radix-switch-thumb] {
-    background-color: hsl(var(--medmap-purple)) !important;
+    background-color: hsl(var(--destructive)) !important;
   }
   
   .switch-purple[data-state="checked"] [data-radix-switch-thumb] {
@@ -581,8 +581,8 @@ All colors MUST be HSL.
   }
   
   .switch-purple[data-state="checked"] {
-    background-color: hsl(var(--medmap-purple)) !important;
-    border-color: hsl(var(--medmap-purple)) !important;
+    background-color: hsl(var(--destructive)) !important;
+    border-color: hsl(var(--destructive)) !important;
   }
   
   /* Icon Component Styles - Colorful Variations */

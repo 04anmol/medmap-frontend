@@ -81,19 +81,23 @@ const SOSScreen = () => {
     return (
       <div className="min-h-screen bg-gradient-surface pb-24">
         {/* Header */}
-        <div className="p-6 bg-destructive/10 border-b border-destructive/20">
-          <div className="flex items-center">
-            <div className="w-3 h-3 bg-destructive rounded-full animate-pulse mr-3"></div>
-            <div>
-              <h1 className="text-xl font-bold text-destructive">Emergency Active</h1>
-              <p className="text-sm text-destructive/80">Ambulance dispatched</p>
+        <div className="p-6 pb-4 pt-12">
+          <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-t-lg border-4 border-red-500 p-6 shadow-sm">
+            <div className="flex items-center">
+              <div className="w-3 h-3 bg-red-600 rounded-full animate-pulse mr-3"></div>
+              <div>
+                <h1 className="text-xl font-bold text-red-600">Emergency Active</h1>
+                <p className="text-red-700 text-sm">Ambulance dispatched</p>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Ambulance Info */}
         <div className="p-6">
-          <Card className="card-medmap card-emergency mb-6">
+          <Card className="card-medmap mb-6 rounded-lg shadow-md border-2 border-red-500" style={{
+            background: 'linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 50%, #FECACA 100%)'
+          }}>
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center">
                 <Ambulance className="w-8 h-8 text-destructive mr-3" />
@@ -120,33 +124,37 @@ const SOSScreen = () => {
           </Card>
 
           {/* Map Placeholder */}
-          <Card className="card-medmap mb-6">
-            <div className="h-48 bg-muted rounded-lg flex items-center justify-center">
+          <Card className="card-medmap mb-6 rounded-lg shadow-md border-2 border-red-500" style={{
+            background: 'linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 50%, #FECACA 100%)'
+          }}>
+            <div className="h-48 bg-gradient-to-br from-red-50 to-red-100 rounded-lg flex items-center justify-center">
               <div className="text-center">
-                <MapPin className="w-12 h-12 text-primary mx-auto mb-2" />
-                <p className="text-medmap-gray">Live tracking map</p>
-                <p className="text-sm text-medmap-gray">Ambulance en route to your location</p>
+                <MapPin className="w-12 h-12 text-red-600 mx-auto mb-2" />
+                <p className="text-gray-700 font-medium">Live tracking map</p>
+                <p className="text-sm text-gray-600">Ambulance en route to your location</p>
               </div>
             </div>
           </Card>
 
           {/* Hospital Destination */}
-          <Card className="card-medmap">
-            <h3 className="font-semibold text-foreground mb-3">Destination Hospital</h3>
+          <Card className="card-medmap rounded-lg shadow-md border-2 border-red-500" style={{
+            background: 'linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 50%, #FECACA 100%)'
+          }}>
+            <h3 className="font-semibold text-gray-800 mb-3">Destination Hospital</h3>
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <div>
-                  <h4 className="font-medium">{hospitals[0].name}</h4>
-                  <p className="text-sm text-medmap-gray">{hospitals[0].distance} away</p>
+                  <h4 className="font-medium text-gray-800">{hospitals[0].name}</h4>
+                  <p className="text-sm text-gray-600">{hospitals[0].distance} away</p>
                 </div>
-                <Button size="sm" variant="outline">
+                <Button size="sm" variant="outline" className="border-red-300 text-red-600 hover:bg-red-50">
                   <MapPin className="w-4 h-4 mr-2" />
                   Directions
                 </Button>
               </div>
               <div className="flex flex-wrap gap-2">
                 {hospitals[0].specialties.map((specialty) => (
-                  <span key={specialty} className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
+                  <span key={specialty} className="text-xs bg-red-100 text-red-700 px-2 py-1 rounded">
                     {specialty}
                   </span>
                 ))}
@@ -164,8 +172,10 @@ const SOSScreen = () => {
     return (
       <div className="min-h-screen bg-gradient-surface pb-24">
         <div className="p-6">
-          <h1 className="text-2xl font-bold text-destructive mb-2">Emergency Details</h1>
-          <p className="text-medmap-gray mb-6">Please provide additional information</p>
+          <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-t-lg border-4 border-red-500 p-6 shadow-sm mb-6">
+            <h1 className="text-2xl font-bold text-red-600 mb-2">Emergency Details</h1>
+            <p className="text-red-700 text-sm">Please provide additional information</p>
+          </div>
 
           <div className="space-y-6">
             {/* Patient Information */}
@@ -209,16 +219,22 @@ const SOSScreen = () => {
                     </div>
                     <div>
                       <Label htmlFor="bloodType">Blood Type</Label>
-                      <Select onValueChange={(value) => setEmergencyData(prev => ({ ...prev, bloodType: value }))}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select blood type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].map((type) => (
-                            <SelectItem key={type} value={type}>{type}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      <div className="grid grid-cols-4 gap-2 mt-2">
+                        {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].map((type) => (
+                          <button
+                            key={type}
+                            type="button"
+                            onClick={() => setEmergencyData(prev => ({ ...prev, bloodType: type }))}
+                            className={`p-3 rounded-lg border-2 transition-all duration-200 text-sm font-medium ${
+                              emergencyData.bloodType === type
+                                ? 'bg-purple-500 text-white border-purple-500 shadow-lg scale-105'
+                                : 'bg-white/10 text-gray-700 border-gray-300 hover:bg-purple-50 hover:border-purple-300'
+                            }`}
+                          >
+                            {type}
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   </>
                 )}
