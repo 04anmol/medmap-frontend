@@ -403,7 +403,7 @@ const HomeScreen = () => {
             <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-4 snap-x snap-mandatory px-4">
               {/* Card 1: Response Time */}
               <div className="flex-shrink-0 w-80 snap-center">
-                <Card className="card-medmap bg-gradient-to-br from-teal-500 to-teal-600 text-white h-80 p-6">
+                <Card className="card-medmap bg-gradient-to-br from-teal-500 to-teal-600 text-white h-72 p-6">
                   <div className="h-full flex flex-col">
                     <h3 className="text-sm font-semibold mb-2">RESPONSE TIME</h3>
                     <div className="text-3xl font-bold mb-2">2.4 min</div>
@@ -425,7 +425,7 @@ const HomeScreen = () => {
 
               {/* Card 2: Active Ambulances */}
               <div className="flex-shrink-0 w-80 snap-center">
-                <Card className="card-medmap bg-gradient-to-br from-orange-500 to-orange-600 text-white h-80 p-6">
+                <Card className="card-medmap bg-gradient-to-br from-orange-500 to-orange-600 text-white h-72 p-6">
                   <div className="h-full flex flex-col">
                     <h3 className="text-sm font-semibold mb-2">ACTIVE AMBULANCES</h3>
                     <div className="text-3xl font-bold mb-2">47</div>
@@ -447,7 +447,7 @@ const HomeScreen = () => {
 
               {/* Card 3: Emergency Calls */}
               <div className="flex-shrink-0 w-80 snap-center">
-                <Card className="card-medmap bg-gradient-to-br from-red-500 to-red-600 text-white h-80 p-6">
+                <Card className="card-medmap bg-gradient-to-br from-red-500 to-red-600 text-white h-72 p-6">
                   <div className="h-full flex flex-col">
                     <h3 className="text-sm font-semibold mb-2">EMERGENCY CALLS</h3>
                     <div className="text-3xl font-bold mb-2">156</div>
@@ -469,7 +469,7 @@ const HomeScreen = () => {
 
               {/* Card 4: Hospital Beds */}
               <div className="flex-shrink-0 w-80 snap-center">
-                <Card className="card-medmap bg-gradient-to-br from-blue-500 to-blue-600 text-white h-80 p-6">
+                <Card className="card-medmap bg-gradient-to-br from-blue-500 to-blue-600 text-white h-72 p-6">
                   <div className="h-full flex flex-col">
                     <h3 className="text-sm font-semibold mb-2">HOSPITAL BEDS</h3>
                     <div className="text-3xl font-bold mb-2">89%</div>
@@ -491,7 +491,7 @@ const HomeScreen = () => {
 
               {/* Card 5: Blood Supply */}
               <div className="flex-shrink-0 w-80 snap-center">
-                <Card className="card-medmap bg-gradient-to-br from-purple-500 to-purple-600 text-white h-80 p-6">
+                <Card className="card-medmap bg-gradient-to-br from-purple-500 to-purple-600 text-white h-72 p-6">
                   <div className="h-full flex flex-col">
                     <h3 className="text-sm font-semibold mb-2">BLOOD SUPPLY</h3>
                     <div className="text-3xl font-bold mb-2">67%</div>
@@ -513,7 +513,7 @@ const HomeScreen = () => {
 
               {/* Card 6: Success Rate */}
               <div className="flex-shrink-0 w-80 snap-center">
-                <Card className="card-medmap bg-gradient-to-br from-green-500 to-green-600 text-white h-80 p-6">
+                <Card className="card-medmap bg-gradient-to-br from-green-500 to-green-600 text-white h-72 p-6">
                   <div className="h-full flex flex-col">
                     <h3 className="text-sm font-semibold mb-2">SUCCESS RATE</h3>
                     <div className="text-3xl font-bold mb-2">94.2%</div>
@@ -536,7 +536,7 @@ const HomeScreen = () => {
               {/* Duplicate cards for infinite loop */}
               {/* Card 1: Response Time (Duplicate) */}
               <div className="flex-shrink-0 w-80 snap-center">
-                <Card className="card-medmap bg-gradient-to-br from-teal-500 to-teal-600 text-white h-80 p-6">
+                <Card className="card-medmap bg-gradient-to-br from-teal-500 to-teal-600 text-white h-72 p-6">
                   <div className="h-full flex flex-col">
                     <h3 className="text-sm font-semibold mb-2">RESPONSE TIME</h3>
                     <div className="text-3xl font-bold mb-2">2.4 min</div>
@@ -558,7 +558,7 @@ const HomeScreen = () => {
 
               {/* Card 2: Active Ambulances (Duplicate) */}
               <div className="flex-shrink-0 w-80 snap-center">
-                <Card className="card-medmap bg-gradient-to-br from-orange-500 to-orange-600 text-white h-80 p-6">
+                <Card className="card-medmap bg-gradient-to-br from-orange-500 to-orange-600 text-white h-72 p-6">
                   <div className="h-full flex flex-col">
                     <h3 className="text-sm font-semibold mb-2">ACTIVE AMBULANCES</h3>
                     <div className="text-3xl font-bold mb-2">47</div>
@@ -578,9 +578,9 @@ const HomeScreen = () => {
                 </Card>
               </div>
 
-              {/* Card 3: Emergency Calls (Duplicate) */}
+                            {/* Card 3: Emergency Calls (Duplicate) */}
               <div className="flex-shrink-0 w-80 snap-center">
-                <Card className="card-medmap bg-gradient-to-br from-red-500 to-red-600 text-white h-80 p-6">
+                <Card className="card-medmap bg-gradient-to-br from-red-500 to-red-600 text-white h-72 p-6">
                   <div className="h-full flex flex-col">
                     <h3 className="text-sm font-semibold mb-2">EMERGENCY CALLS</h3>
                     <div className="text-3xl font-bold mb-2">156</div>
@@ -600,9 +600,10 @@ const HomeScreen = () => {
                 </Card>
               </div>
 
+              {/* Additional duplicates for infinite scroll */}
               {/* Card 4: Hospital Beds (Duplicate) */}
               <div className="flex-shrink-0 w-80 snap-center">
-                <Card className="card-medmap bg-gradient-to-br from-blue-500 to-blue-600 text-white h-64 p-6">
+                <Card className="card-medmap bg-gradient-to-br from-blue-500 to-blue-600 text-white h-72 p-6">
                   <div className="h-full flex flex-col">
                     <h3 className="text-sm font-semibold mb-2">HOSPITAL BEDS</h3>
                     <div className="text-3xl font-bold mb-2">89%</div>
@@ -624,7 +625,7 @@ const HomeScreen = () => {
 
               {/* Card 5: Blood Supply (Duplicate) */}
               <div className="flex-shrink-0 w-80 snap-center">
-                <Card className="card-medmap bg-gradient-to-br from-purple-500 to-purple-600 text-white h-64 p-6">
+                <Card className="card-medmap bg-gradient-to-br from-purple-500 to-purple-600 text-white h-72 p-6">
                   <div className="h-full flex flex-col">
                     <h3 className="text-sm font-semibold mb-2">BLOOD SUPPLY</h3>
                     <div className="text-3xl font-bold mb-2">67%</div>
@@ -646,7 +647,7 @@ const HomeScreen = () => {
 
               {/* Card 6: Success Rate (Duplicate) */}
               <div className="flex-shrink-0 w-80 snap-center">
-                <Card className="card-medmap bg-gradient-to-br from-green-500 to-green-600 text-white h-64 p-6">
+                <Card className="card-medmap bg-gradient-to-br from-green-500 to-green-600 text-white h-72 p-6">
                   <div className="h-full flex flex-col">
                     <h3 className="text-sm font-semibold mb-2">SUCCESS RATE</h3>
                     <div className="text-3xl font-bold mb-2">94.2%</div>
@@ -665,6 +666,8 @@ const HomeScreen = () => {
                   </div>
                 </Card>
               </div>
+
+ 
             </div>
           </div>
         </div>
