@@ -143,16 +143,22 @@ const UserFormScreen = () => {
 
                 <div>
                   <Label htmlFor="bloodType" className="mb-3 block text-white">Blood Type</Label>
-                  <Select onValueChange={(value) => handleSelectChange('bloodType', value)}>
-                    <SelectTrigger className="bg-white/20 text-white">
-                      <SelectValue placeholder="Select blood type" className="text-white placeholder:text-white/70" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {bloodTypes.map((type) => (
-                        <SelectItem key={type} value={type}>{type}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <div className="grid grid-cols-4 gap-2">
+                    {bloodTypes.map((type) => (
+                      <button
+                        key={type}
+                        type="button"
+                        onClick={() => handleSelectChange('bloodType', type)}
+                        className={`p-3 rounded-lg border-2 transition-all duration-200 text-sm font-medium ${
+                          formData.bloodType === type
+                            ? 'bg-white text-purple-600 border-white shadow-lg scale-105'
+                            : 'bg-white/10 text-white border-white/30 hover:bg-white/20 hover:border-white/50'
+                        }`}
+                      >
+                        {type}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
             </Card>
